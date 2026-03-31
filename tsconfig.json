@@ -1,0 +1,3 @@
+{
+  "extends": "@prenoms/config/tsconfig.base.json"
+}
