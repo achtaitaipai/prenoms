@@ -1,8 +1,11 @@
 import { cors } from "@elysiajs/cors";
+import openapi from "@elysiajs/openapi";
 import { env } from "@prenoms/env/server";
 import { Elysia } from "elysia";
+import { national } from "./modules/national";
 
-const app = new Elysia()
+new Elysia()
+  .use(openapi())
   .use(
     cors({
       origin: env.CORS_ORIGIN,
@@ -10,6 +13,7 @@ const app = new Elysia()
     }),
   )
   .get("/", () => "OK")
+  .use(national)
   .listen(3000, () => {
     console.log("Server is running on http://localhost:3000");
   });

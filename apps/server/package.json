@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "@elysiajs/cors": "^1.4.1",
+    "@elysiajs/openapi": "^1.4.14",
     "@prenoms/db": "workspace:*",
     "@prenoms/env": "workspace:*",
     "dotenv": "catalog:",
+    "drizzle-orm": "^0.45.1",
     "elysia": "^1.4.21",
     "zod": "catalog:"
   },
