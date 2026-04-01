@@ -7,6 +7,7 @@ export default function Header() {
     { to: "/", label: "Accueil" },
     { to: "/statistiques", label: "Statistiques" },
     { to: "/classement", label: "Classement" },
+    { to: "/repartition", label: "Répartition" },
   ] as const;
 
   return (
