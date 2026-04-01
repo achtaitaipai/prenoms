@@ -34,7 +34,8 @@
     "db:generate": "bun run --filter @prenoms/db db:generate",
     "db:migrate": "bun run --filter @prenoms/db db:migrate",
     "db:local": "bun run --filter @prenoms/db db:local",
-    "check": "oxlint && oxfmt --write"
+    "db:seed": "bun run --filter @prenoms/seed seed",
+    "check": "oxlint --ignore-pattern .claude && oxfmt --write"
   },
   "dependencies": {
     "@prenoms/env": "workspace:*",

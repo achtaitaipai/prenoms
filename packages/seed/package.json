@@ -1,0 +1,17 @@
+{
+  "name": "@prenoms/seed",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "seed": "bun --env-file=../../apps/server/.env run src/index.ts"
+  },
+  "dependencies": {
+    "@prenoms/db": "workspace:*",
+    "drizzle-orm": "^0.45.1",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@prenoms/config": "workspace:*",
+    "typescript": "^5"
+  }
+}
