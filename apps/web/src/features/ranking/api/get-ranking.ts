@@ -20,7 +20,14 @@ async function fetchRanking(params: RankingParams) {
 
 export function useRankingQuery(params: RankingParams) {
   return useQuery({
-    queryKey: ["national-ranking", params.sex, params.yearStart, params.yearEnd, params.page, params.pageSize],
+    queryKey: [
+      "national-ranking",
+      params.sex,
+      params.yearStart,
+      params.yearEnd,
+      params.page,
+      params.pageSize,
+    ],
     queryFn: () => fetchRanking(params),
   });
 }

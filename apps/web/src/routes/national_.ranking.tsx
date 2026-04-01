@@ -1,30 +1,54 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@prenoms/ui/components/card";
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
 import { useRankingQuery } from "@/features/ranking/api/get-ranking";
 import { RankingFilters } from "@/features/ranking/components/ranking-filters";
 import { RankingPagination } from "@/features/ranking/components/ranking-pagination";
 import { RankingTable } from "@/features/ranking/components/ranking-table";
 
+type RankingSearch = {
+  sex?: 1 | 2;
+  yearStart?: number;
+  yearEnd?: number;
+  page?: number;
+};
+
 export const Route = createFileRoute("/national_/ranking")({
   component: RankingComponent,
+  validateSearch: (search: Record<string, unknown>): RankingSearch => {
+    const sex = Number(search.sex);
+    const yearStart = Number(search.yearStart);
+    const yearEnd = Number(search.yearEnd);
+    const page = Number(search.page);
+    return {
+      sex: sex === 1 || sex === 2 ? sex : undefined,
+      yearStart: Number.isFinite(yearStart) ? yearStart : undefined,
+      yearEnd: Number.isFinite(yearEnd) ? yearEnd : undefined,
+      page: Number.isInteger(page) && page >= 1 ? page : undefined,
+    };
+  },
 });
 
 function RankingComponent() {
-  const [sex, setSex] = useState<1 | 2 | undefined>();
-  const [yearStart, setYearStart] = useState<number | undefined>();
-  const [yearEnd, setYearEnd] = useState<number | undefined>();
-  const [page, setPage] = useState(1);
+  const { sex, yearStart, yearEnd, page: searchPage } = Route.useSearch();
+  const navigate = useNavigate();
+  const page = searchPage ?? 1;
   const pageSize = 20;
 
   const { data, isLoading } = useRankingQuery({ sex, yearStart, yearEnd, page, pageSize });
 
   function handleFilter(filters: { sex?: 1 | 2; yearStart?: number; yearEnd?: number }) {
-    setSex(filters.sex);
-    setYearStart(filters.yearStart);
-    setYearEnd(filters.yearEnd);
-    setPage(1);
+    navigate({
+      to: ".",
+      search: { ...filters, page: undefined },
+    });
+  }
+
+  function handlePageChange(newPage: number) {
+    navigate({
+      to: ".",
+      search: (prev: RankingSearch) => ({ ...prev, page: newPage }),
+    });
   }
 
   return (
@@ -34,7 +58,7 @@ function RankingComponent() {
           <CardTitle>Classement national</CardTitle>
         </CardHeader>
         <CardContent>
-          <RankingFilters onFilter={handleFilter} />
+          <RankingFilters onFilter={handleFilter} defaultValues={{ sex, yearStart, yearEnd }} />
         </CardContent>
       </Card>
 
@@ -46,9 +70,8 @@ function RankingComponent() {
               <RankingTable data={data.data} page={data.page} pageSize={data.pageSize} />
               <RankingPagination
                 page={data.page}
-                pageSize={data.pageSize}
-                dataLength={data.data.length}
-                onPageChange={setPage}
+                totalPages={data.totalPages}
+                onPageChange={handlePageChange}
               />
             </div>
           )}

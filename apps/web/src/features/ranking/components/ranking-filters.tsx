@@ -11,12 +11,13 @@ type Filters = {
 
 type RankingFiltersProps = {
   onFilter: (filters: Filters) => void;
+  defaultValues?: Filters;
 };
 
-export function RankingFilters({ onFilter }: RankingFiltersProps) {
-  const [sex, setSex] = useState<1 | 2 | undefined>();
-  const [yearStart, setYearStart] = useState("");
-  const [yearEnd, setYearEnd] = useState("");
+export function RankingFilters({ onFilter, defaultValues }: RankingFiltersProps) {
+  const [sex, setSex] = useState<1 | 2 | undefined>(defaultValues?.sex);
+  const [yearStart, setYearStart] = useState(defaultValues?.yearStart?.toString() ?? "");
+  const [yearEnd, setYearEnd] = useState(defaultValues?.yearEnd?.toString() ?? "");
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
