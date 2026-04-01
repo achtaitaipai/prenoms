@@ -28,7 +28,7 @@
     "build": "bun run --filter '*' build",
     "check-types": "bun run --filter '*' check-types",
     "dev:web": "bun run --filter web dev",
-    "dev:server": "bun run --filter server dev",
+    "dev:server": "bun run --filter @prenoms/server dev",
     "db:push": "bun run --filter @prenoms/db db:push",
     "db:studio": "bun run --filter @prenoms/db db:studio",
     "db:generate": "bun run --filter @prenoms/db db:generate",
