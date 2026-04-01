@@ -53,5 +53,15 @@ export const stats = new Elysia().get(
         .pipe(z.union([z.literal(1), z.literal(2)]))
         .optional(),
     }),
+    response: z.object({
+      firstname: z.string(),
+      totalCount: z.number().int(),
+      byYear: z.array(
+        z.object({
+          year: z.number().int(),
+          count: z.number().int(),
+        }),
+      ),
+    }),
   },
 );

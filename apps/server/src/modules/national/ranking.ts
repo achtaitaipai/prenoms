@@ -53,5 +53,16 @@ export const ranking = new Elysia().get(
       page: z.coerce.number().min(1).default(1),
       pageSize: z.coerce.number().min(1).max(100).default(20),
     }),
+    response: z.object({
+      page: z.number().int(),
+      pageSize: z.number().int(),
+      totalPages: z.number().int(),
+      data: z.array(
+        z.object({
+          firstname: z.string(),
+          total: z.number().int(),
+        }),
+      ),
+    }),
   },
 );
