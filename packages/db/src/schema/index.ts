@@ -1,10 +1,5 @@
 import { createInsertSchema } from "drizzle-zod";
-import {
-  integer,
-  primaryKey,
-  sqliteTable,
-  text,
-} from "drizzle-orm/sqlite-core";
+import { integer, primaryKey, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const nationalFirstnames = sqliteTable(
   "national_firstnames",
@@ -14,10 +9,7 @@ export const nationalFirstnames = sqliteTable(
     count: integer("count").notNull(),
     sex: integer("sex").notNull(), // 1 = male, 2 = female
   },
-  (table) => [
-    primaryKey({ columns: [table.firstname, table.year, table.sex] }),
-  ],
+  (table) => [primaryKey({ columns: [table.firstname, table.year, table.sex] })],
 );
 
-export const insertNationalFirstnameSchema =
-  createInsertSchema(nationalFirstnames);
+export const insertNationalFirstnameSchema = createInsertSchema(nationalFirstnames);

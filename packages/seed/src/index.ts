@@ -1,8 +1,4 @@
-import {
-  db,
-  insertNationalFirstnameSchema,
-  nationalFirstnames,
-} from "@prenoms/db";
+import { db, insertNationalFirstnameSchema, nationalFirstnames } from "@prenoms/db";
 import { sql } from "drizzle-orm";
 import { z } from "zod";
 
