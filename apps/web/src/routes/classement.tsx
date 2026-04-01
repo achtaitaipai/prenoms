@@ -13,7 +13,7 @@ type RankingSearch = {
   page?: number;
 };
 
-export const Route = createFileRoute("/national_/ranking")({
+export const Route = createFileRoute("/classement")({
   component: RankingComponent,
   validateSearch: (search: Record<string, unknown>): RankingSearch => {
     const sex = Number(search.sex);

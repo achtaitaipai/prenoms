@@ -10,7 +10,7 @@ type NationalSearch = {
   e?: string;
 };
 
-export const Route = createFileRoute("/national")({
+export const Route = createFileRoute("/statistiques")({
   component: NationalComponent,
   validateSearch: (search: Record<string, unknown>): NationalSearch => ({
     e: typeof search.e === "string" ? search.e : undefined,
