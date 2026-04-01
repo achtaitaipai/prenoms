@@ -1,28 +1,41 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@prenoms/ui/components/card";
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
 import { useStatsQueries } from "@/features/national/api/get-stats";
 import { SearchForm } from "@/features/national/components/search-form";
 import { StatsChart } from "@/features/national/components/stats-chart";
-import { entryLabel, type Entry } from "@/features/national/types";
+import { entryLabel, parseEntries, serializeEntries, type Entry } from "@/features/national/types";
+
+type NationalSearch = {
+  e?: string;
+};
 
 export const Route = createFileRoute("/national")({
   component: NationalComponent,
+  validateSearch: (search: Record<string, unknown>): NationalSearch => ({
+    e: typeof search.e === "string" ? search.e : undefined,
+  }),
 });
 
 function NationalComponent() {
-  const [entries, setEntries] = useState<Entry[]>([]);
+  const { e } = Route.useSearch();
+  const navigate = useNavigate();
+  const entries = parseEntries(e ?? "");
   const results = useStatsQueries(entries);
 
   const isLoading = results.some((r) => r.isLoading);
 
   function addEntry(entry: Entry) {
-    setEntries((prev) => [...prev, entry]);
+    const next = [...entries, entry];
+    navigate({ to: ".", search: { e: serializeEntries(next) } });
   }
 
   function removeEntry(id: string) {
-    setEntries((prev) => prev.filter((e) => e.id !== id));
+    const next = entries.filter((e) => e.id !== id);
+    navigate({
+      to: ".",
+      search: next.length ? { e: serializeEntries(next) } : {},
+    });
   }
 
   return (

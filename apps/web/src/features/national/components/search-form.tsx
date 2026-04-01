@@ -17,7 +17,7 @@ export function SearchForm({ onAdd }: SearchFormProps) {
     e.preventDefault();
     const trimmed = firstname.trim();
     if (!trimmed) return;
-    onAdd({ id: `${trimmed}-${sex ?? "all"}-${Date.now()}`, firstname: trimmed, sex });
+    onAdd({ id: `${trimmed}-${sex ?? "all"}`, firstname: trimmed, sex });
     setFirstname("");
   }
 
