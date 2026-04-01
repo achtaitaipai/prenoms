@@ -11,18 +11,23 @@
     "check-types": "vite build && tsc --noEmit"
   },
   "dependencies": {
+    "@elysiajs/eden": "^1.4.9",
     "@hookform/resolvers": "^5.1.1",
     "@libsql/client": "catalog:",
     "@prenoms/env": "workspace:*",
+    "@prenoms/server": "workspace:*",
     "@prenoms/ui": "workspace:*",
     "@tailwindcss/vite": "^4.1.18",
+    "@tanstack/react-query": "^5.96.1",
     "@tanstack/react-router": "^1.141.1",
     "dotenv": "catalog:",
+    "elysia": "^1.4.21",
     "libsql": "catalog:",
     "lucide-react": "catalog:",
     "next-themes": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
+    "recharts": "^3.8.1",
     "sonner": "catalog:",
     "zod": "catalog:"
   },
