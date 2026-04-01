@@ -21,10 +21,11 @@ export const ranking = new Elysia().get(
 
     const where = conditions.length > 0 ? and(...conditions) : undefined;
 
-    const [{ total: totalCount }] = await db
+    const [row] = await db
       .select({ total: countDistinct(nationalFirstnames.firstname) })
       .from(nationalFirstnames)
       .where(where);
+    const totalCount = row?.total ?? 0;
 
     const totalPages = Math.ceil(totalCount / pageSize);
 
