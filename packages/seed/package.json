@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "seed": "bun --env-file=../../apps/server/.env run src/index.ts"
+    "seed": "bun --env-file=../../apps/server/.env run src/index.ts",
+    "seed:regional": "bun --env-file=../../apps/server/.env run src/seed-regional.ts"
   },
   "dependencies": {
     "@prenoms/db": "workspace:*",

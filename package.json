@@ -35,6 +35,7 @@
     "db:migrate": "bun run --filter @prenoms/db db:migrate",
     "db:local": "bun run --filter @prenoms/db db:local",
     "db:seed": "bun run --filter @prenoms/seed seed",
+    "db:seed:regional": "bun run --filter @prenoms/seed seed:regional",
     "test:server": "bun run --filter @prenoms/server test",
     "check": "oxlint --ignore-pattern .claude && oxfmt --write"
   },
