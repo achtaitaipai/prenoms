@@ -1,5 +1,5 @@
 import { db, nationalFirstnames } from "@prenoms/db";
-import { and, desc, eq, gte, lte, sum } from "drizzle-orm";
+import { and, countDistinct, desc, eq, gte, lte, sum } from "drizzle-orm";
 import { Elysia } from "elysia";
 import { z } from "zod";
 
@@ -21,6 +21,13 @@ export const ranking = new Elysia().get(
 
     const where = conditions.length > 0 ? and(...conditions) : undefined;
 
+    const [{ total: totalCount }] = await db
+      .select({ total: countDistinct(nationalFirstnames.firstname) })
+      .from(nationalFirstnames)
+      .where(where);
+
+    const totalPages = Math.ceil(totalCount / pageSize);
+
     const data = await db
       .select({
         firstname: nationalFirstnames.firstname,
@@ -33,7 +40,7 @@ export const ranking = new Elysia().get(
       .limit(pageSize)
       .offset((page - 1) * pageSize);
 
-    return { page, pageSize, data };
+    return { page, pageSize, totalPages, data };
   },
   {
     query: z.object({
