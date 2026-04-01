@@ -4,7 +4,7 @@ import { env } from "@prenoms/env/server";
 import { Elysia } from "elysia";
 import { national } from "./modules/national";
 
-new Elysia()
+const app = new Elysia()
   .use(openapi())
   .use(
     cors({
@@ -17,3 +17,5 @@ new Elysia()
   .listen(3000, () => {
     console.log("Server is running on http://localhost:3000");
   });
+
+export type App = typeof app;
