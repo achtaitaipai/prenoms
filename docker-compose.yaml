@@ -1,0 +1,26 @@
+services:
+  prenoms-web:
+    image: ghcr.io/achtaitaipai/prenoms-web:latest
+    container_name: prenoms-web
+    restart: unless-stopped
+    networks:
+      - caddy_net
+    depends_on:
+      - prenoms-server
+
+  prenoms-server:
+    image: ghcr.io/achtaitaipai/prenoms-server:latest
+    container_name: prenoms-server
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
+    environment:
+      - DATABASE_URL=file:/app/data/prenoms.db
+      - CORS_ORIGIN=${CORS_ORIGIN}
+      - NODE_ENV=production
+    networks:
+      - caddy_net
+
+networks:
+  caddy_net:
+    external: true

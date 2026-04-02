@@ -1,0 +1,31 @@
+FROM oven/bun:1-alpine AS deps
+WORKDIR /app
+COPY package.json bun.lock ./
+COPY apps/server/package.json ./apps/server/
+COPY packages/db/package.json ./packages/db/
+COPY packages/env/package.json ./packages/env/
+COPY packages/config/package.json ./packages/config/
+RUN bun install --frozen-lockfile
+
+FROM oven/bun:1-alpine AS build
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/apps/server/node_modules ./apps/server/node_modules
+COPY --from=deps /app/packages/db/node_modules ./packages/db/node_modules
+COPY --from=deps /app/packages/env/node_modules ./packages/env/node_modules
+COPY . .
+RUN cd apps/server && bun run build
+
+FROM oven/bun:1-alpine AS runtime
+WORKDIR /app
+COPY --from=build /app/apps/server/dist ./dist
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=build /app/packages/db/src/schema ./packages/db/src/schema
+COPY --from=build /app/packages/db/drizzle.config.ts ./packages/db/drizzle.config.ts
+COPY --from=build /app/packages/db/package.json ./packages/db/package.json
+COPY --from=deps /app/packages/db/node_modules ./packages/db/node_modules
+COPY apps/server/entrypoint.sh ./entrypoint.sh
+RUN chmod +x ./entrypoint.sh
+ENV NODE_ENV=production
+EXPOSE 3000
+CMD ["./entrypoint.sh"]
