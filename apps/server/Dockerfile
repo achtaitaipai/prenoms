@@ -5,6 +5,8 @@ COPY apps/server/package.json ./apps/server/
 COPY packages/db/package.json ./packages/db/
 COPY packages/env/package.json ./packages/env/
 COPY packages/config/package.json ./packages/config/
+COPY packages/seed/package.json ./packages/seed/
+COPY packages/ui/package.json ./packages/ui/
 RUN bun install --frozen-lockfile
 
 FROM oven/bun:1-alpine AS build
