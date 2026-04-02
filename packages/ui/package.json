@@ -5,32 +5,28 @@
   "type": "module",
   "exports": {
     "./globals.css": "./src/styles/globals.css",
-    "./lib/*": "./src/lib/*.ts",
     "./components/*": "./src/components/*.tsx",
     "./hooks/*": "./src/hooks/*.ts",
+    "./styled-system/*": "./styled-system/*",
     "./postcss.config": "./postcss.config.mjs"
   },
   "scripts": {
+    "prepare": "panda codegen",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@base-ui/react": "^1.0.0",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
+    "@ark-ui/react": "^5.35.0",
     "lucide-react": "catalog:",
     "next-themes": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "shadcn": "^3.6.2",
-    "sonner": "catalog:",
-    "tailwind-merge": "^3.3.1",
-    "tw-animate-css": "^1.3.4"
+    "sonner": "catalog:"
   },
   "devDependencies": {
+    "@pandacss/dev": "^1.9.1",
     "@prenoms/config": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "tailwindcss": "catalog:",
     "typescript": "^5.9.3"
   }
 }

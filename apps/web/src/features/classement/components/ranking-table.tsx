@@ -6,6 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@prenoms/ui/components/table";
+import { css } from "styled-system/css";
 
 type RankingTableProps = {
   data: { firstname: string; total: number }[];
@@ -18,17 +19,21 @@ export function RankingTable({ data, page, pageSize }: RankingTableProps) {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-16">#</TableHead>
+          <TableHead className={css({ width: "4rem" })}>#</TableHead>
           <TableHead>Prénom</TableHead>
-          <TableHead className="text-right">Total</TableHead>
+          <TableHead className={css({ textAlign: "right" })}>Total</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {data.map((row, i) => (
           <TableRow key={row.firstname}>
-            <TableCell className="text-muted-foreground">{(page - 1) * pageSize + i + 1}</TableCell>
+            <TableCell className={css({ color: "muted.foreground" })}>
+              {(page - 1) * pageSize + i + 1}
+            </TableCell>
             <TableCell>{row.firstname}</TableCell>
-            <TableCell className="text-right">{row.total.toLocaleString("fr-FR")}</TableCell>
+            <TableCell className={css({ textAlign: "right" })}>
+              {row.total.toLocaleString("fr-FR")}
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>

@@ -1,10 +1,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@prenoms/ui/components/card";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { css } from "styled-system/css";
+import { container } from "styled-system/patterns";
 
 import { useStatsQueries } from "@/features/statistiques/api/get-stats";
 import { SearchForm } from "@/features/statistiques/components/search-form";
 import { StatsChart } from "@/features/statistiques/components/stats-chart";
-import { entryLabel, parseEntries, serializeEntries, type Entry } from "@/features/statistiques/types";
+import {
+  entryLabel,
+  parseEntries,
+  serializeEntries,
+  type Entry,
+} from "@/features/statistiques/types";
 
 type NationalSearch = {
   e?: string;
@@ -15,6 +22,15 @@ export const Route = createFileRoute("/statistiques")({
   validateSearch: (search: Record<string, unknown>): NationalSearch => ({
     e: typeof search.e === "string" ? search.e : undefined,
   }),
+});
+
+const pageContainer = container({
+  w: "full",
+  display: "flex",
+  flexDirection: "column",
+  gap: "6",
+  px: "4",
+  py: "6",
 });
 
 function NationalComponent() {
@@ -39,22 +55,22 @@ function NationalComponent() {
   }
 
   return (
-    <div className="container mx-auto max-w-3xl space-y-6 px-4 py-6">
+    <div className={pageContainer}>
       <Card>
         <CardHeader>
           <CardTitle>Statistiques nationales</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className={css({ display: "flex", flexDirection: "column", gap: "4" })}>
           <SearchForm onAdd={addEntry} />
 
           {entries.length > 0 && <EntryTags entries={entries} onRemove={removeEntry} />}
         </CardContent>
       </Card>
 
-      {isLoading && <p className="text-muted-foreground">Chargement...</p>}
+      {isLoading && <p className={css({ color: "muted.foreground" })}>Chargement...</p>}
 
       <Card>
-        <CardContent className="pt-6">
+        <CardContent className={css({ pt: "6" })}>
           <StatsChart entries={entries} results={results} />
         </CardContent>
       </Card>
@@ -66,17 +82,31 @@ const COLORS = ["#2563eb", "#dc2626", "#16a34a", "#9333ea", "#ea580c"];
 
 function EntryTags({ entries, onRemove }: { entries: Entry[]; onRemove: (id: string) => void }) {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className={css({ display: "flex", flexWrap: "wrap", gap: "2" })}>
       {entries.map((entry, i) => (
         <span
           key={entry.id}
-          className="inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs"
+          className={css({
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "1",
+            rounded: "full",
+            borderWidth: "1px",
+            px: "3",
+            py: "1",
+            fontSize: "xs",
+          })}
           style={{ borderColor: COLORS[i % COLORS.length] }}
         >
           {entryLabel(entry)}
           <button
             type="button"
-            className="ml-1 cursor-pointer text-muted-foreground hover:text-foreground"
+            className={css({
+              ml: "1",
+              cursor: "pointer",
+              color: "muted.foreground",
+              _hover: { color: "foreground" },
+            })}
             onClick={() => onRemove(entry.id)}
           >
             ×

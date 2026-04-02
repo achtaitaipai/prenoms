@@ -1,6 +1,7 @@
 import { Toaster } from "@prenoms/ui/components/sonner";
 import { HeadContent, Outlet, createRootRouteWithContext } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { css } from "styled-system/css";
 
 import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -40,7 +41,7 @@ function RootComponent() {
         disableTransitionOnChange
         storageKey="vite-ui-theme"
       >
-        <div className="grid grid-rows-[auto_1fr] h-svh">
+        <div className={css({ display: "grid", gridTemplateRows: "auto 1fr", height: "100svh" })}>
           <Header />
           <Outlet />
         </div>

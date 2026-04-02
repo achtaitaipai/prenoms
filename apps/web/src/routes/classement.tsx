@@ -1,5 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@prenoms/ui/components/card";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { css } from "styled-system/css";
+import { container } from "styled-system/patterns";
 
 import { useRankingQuery } from "@/features/classement/api/get-ranking";
 import { RankingFilters } from "@/features/classement/components/ranking-filters";
@@ -29,6 +31,15 @@ export const Route = createFileRoute("/classement")({
   },
 });
 
+const pageContainer = container({
+  w: "full",
+  display: "flex",
+  flexDirection: "column",
+  gap: "6",
+  px: "4",
+  py: "6",
+});
+
 function RankingComponent() {
   const { sex, yearStart, yearEnd, page: searchPage } = Route.useSearch();
   const navigate = useNavigate();
@@ -52,7 +63,7 @@ function RankingComponent() {
   }
 
   return (
-    <div className="container mx-auto max-w-3xl space-y-6 px-4 py-6">
+    <div className={pageContainer}>
       <Card>
         <CardHeader>
           <CardTitle>Classement national</CardTitle>
@@ -63,10 +74,10 @@ function RankingComponent() {
       </Card>
 
       <Card>
-        <CardContent className="pt-6">
-          {isLoading && <p className="text-muted-foreground">Chargement...</p>}
+        <CardContent className={css({ pt: "6" })}>
+          {isLoading && <p className={css({ color: "muted.foreground" })}>Chargement...</p>}
           {data && (
-            <div className="space-y-4">
+            <div className={css({ display: "flex", flexDirection: "column", gap: "4" })}>
               <RankingTable data={data.data} page={data.page} pageSize={data.pageSize} />
               <RankingPagination
                 page={data.page}

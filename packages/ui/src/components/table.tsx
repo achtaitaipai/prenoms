@@ -1,12 +1,15 @@
-import { cn } from "@prenoms/ui/lib/utils";
+import { css } from "styled-system/css";
 import type { ComponentProps } from "react";
 
 function Table({ className, ...props }: ComponentProps<"table">) {
   return (
-    <div data-slot="table-wrapper" className="relative w-full overflow-auto">
+    <div
+      data-slot="table-wrapper"
+      className={css({ position: "relative", width: "full", overflowX: "auto" })}
+    >
       <table
         data-slot="table"
-        className={cn("w-full caption-bottom text-sm", className)}
+        className={`${css({ width: "full", captionSide: "bottom", fontSize: "sm" })} ${className ?? ""}`}
         {...props}
       />
     </div>
@@ -14,14 +17,20 @@ function Table({ className, ...props }: ComponentProps<"table">) {
 }
 
 function TableHeader({ className, ...props }: ComponentProps<"thead">) {
-  return <thead data-slot="table-header" className={cn("[&_tr]:border-b", className)} {...props} />;
+  return (
+    <thead
+      data-slot="table-header"
+      className={`${css({ "& tr": { borderBottomWidth: "1px" } })} ${className ?? ""}`}
+      {...props}
+    />
+  );
 }
 
 function TableBody({ className, ...props }: ComponentProps<"tbody">) {
   return (
     <tbody
       data-slot="table-body"
-      className={cn("[&_tr:last-child]:border-0", className)}
+      className={`${css({ "& tr:last-child": { borderBottomWidth: "0" } })} ${className ?? ""}`}
       {...props}
     />
   );
@@ -31,7 +40,7 @@ function TableRow({ className, ...props }: ComponentProps<"tr">) {
   return (
     <tr
       data-slot="table-row"
-      className={cn("border-b transition-colors hover:bg-muted/50", className)}
+      className={`${css({ borderBottomWidth: "1px", transition: "colors", _hover: { bg: "muted/50" } })} ${className ?? ""}`}
       {...props}
     />
   );
@@ -41,10 +50,14 @@ function TableHead({ className, ...props }: ComponentProps<"th">) {
   return (
     <th
       data-slot="table-head"
-      className={cn(
-        "h-10 px-3 text-left align-middle font-medium text-muted-foreground",
-        className,
-      )}
+      className={`${css({
+        height: "10",
+        px: "3",
+        textAlign: "left",
+        verticalAlign: "middle",
+        fontWeight: "medium",
+        color: "muted.foreground",
+      })} ${className ?? ""}`}
       {...props}
     />
   );
@@ -52,7 +65,11 @@ function TableHead({ className, ...props }: ComponentProps<"th">) {
 
 function TableCell({ className, ...props }: ComponentProps<"td">) {
   return (
-    <td data-slot="table-cell" className={cn("px-3 py-2 align-middle", className)} {...props} />
+    <td
+      data-slot="table-cell"
+      className={`${css({ px: "3", py: "2", verticalAlign: "middle" })} ${className ?? ""}`}
+      {...props}
+    />
   );
 }
 

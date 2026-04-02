@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { css } from "styled-system/css";
 
 import { ModeToggle } from "./mode-toggle";
 
@@ -12,8 +13,17 @@ export default function Header() {
 
   return (
     <div>
-      <div className="flex flex-row items-center justify-between px-2 py-1">
-        <nav className="flex gap-4 text-lg">
+      <div
+        className={css({
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          px: "2",
+          py: "1",
+        })}
+      >
+        <nav className={css({ display: "flex", gap: "4", fontSize: "lg" })}>
           {links.map(({ to, label }) => {
             return (
               <Link key={to} to={to}>
@@ -22,7 +32,7 @@ export default function Header() {
             );
           })}
         </nav>
-        <div className="flex items-center gap-2">
+        <div className={css({ display: "flex", alignItems: "center", gap: "2" })}>
           <ModeToggle />
         </div>
       </div>

@@ -1,26 +1,39 @@
-"use client";
-
-import { Checkbox as CheckboxPrimitive } from "@base-ui/react/checkbox";
-import { cn } from "@prenoms/ui/lib/utils";
+import { Checkbox as ArkCheckbox } from "@ark-ui/react/checkbox";
+import { css } from "styled-system/css";
 import { CheckIcon } from "lucide-react";
 
-function Checkbox({ className, ...props }: CheckboxPrimitive.Root.Props) {
+function Checkbox({ className, ...props }: React.ComponentProps<typeof ArkCheckbox.Root>) {
   return (
-    <CheckboxPrimitive.Root
-      data-slot="checkbox"
-      className={cn(
-        "peer relative flex size-4 shrink-0 items-center justify-center rounded-none border border-input transition-colors outline-none group-has-disabled/field:opacity-50 after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-1 aria-invalid:ring-destructive/20 aria-invalid:aria-checked:border-primary dark:bg-input/30 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 data-checked:border-primary data-checked:bg-primary data-checked:text-primary-foreground dark:data-checked:bg-primary",
-        className,
-      )}
-      {...props}
-    >
-      <CheckboxPrimitive.Indicator
-        data-slot="checkbox-indicator"
-        className="grid place-content-center text-current transition-none [&>svg]:size-3.5"
+    <ArkCheckbox.Root data-slot="checkbox" {...props}>
+      <ArkCheckbox.Control
+        className={`${css({
+          display: "flex",
+          width: "4",
+          height: "4",
+          flexShrink: 0,
+          alignItems: "center",
+          justifyContent: "center",
+          borderWidth: "1px",
+          borderColor: "input",
+          transition: "colors",
+          cursor: "pointer",
+          _checked: {
+            borderColor: "primary",
+            bg: "primary",
+            color: "primary.foreground",
+          },
+          _disabled: {
+            cursor: "not-allowed",
+            opacity: 0.5,
+          },
+        })} ${className ?? ""}`}
       >
-        <CheckIcon />
-      </CheckboxPrimitive.Indicator>
-    </CheckboxPrimitive.Root>
+        <ArkCheckbox.Indicator>
+          <CheckIcon style={{ width: 14, height: 14 }} />
+        </ArkCheckbox.Indicator>
+      </ArkCheckbox.Control>
+      <ArkCheckbox.HiddenInput />
+    </ArkCheckbox.Root>
   );
 }
 

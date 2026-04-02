@@ -1,5 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@prenoms/ui/components/card";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { css } from "styled-system/css";
+import { container } from "styled-system/patterns";
 
 import { useRepartitionQuery } from "@/features/repartition/api/get-repartition";
 import {
@@ -30,6 +32,15 @@ export const Route = createFileRoute("/repartition")({
   },
 });
 
+const pageContainer = container({
+  w: "full",
+  display: "flex",
+  flexDirection: "column",
+  gap: "6",
+  px: "4",
+  py: "6",
+});
+
 function RepartitionComponent() {
   const { firstname, sex, yearStart, yearEnd } = Route.useSearch();
   const navigate = useNavigate();
@@ -51,7 +62,7 @@ function RepartitionComponent() {
   }
 
   return (
-    <div className="container mx-auto max-w-3xl space-y-6 px-4 py-6">
+    <div className={pageContainer}>
       <Card>
         <CardHeader>
           <CardTitle>Répartition régionale</CardTitle>
@@ -64,7 +75,7 @@ function RepartitionComponent() {
         </CardContent>
       </Card>
 
-      {isLoading && <p className="text-muted-foreground">Chargement...</p>}
+      {isLoading && <p className={css({ color: "muted.foreground" })}>Chargement...</p>}
 
       {data && (
         <Card>

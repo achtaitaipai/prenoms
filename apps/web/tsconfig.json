@@ -14,7 +14,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@prenoms/server": ["../../apps/server/src/index.ts"],
-      "@prenoms/ui/*": ["../../packages/ui/src/*"]
+      "@prenoms/ui/*": ["../../packages/ui/src/*"],
+      "styled-system/*": ["../../packages/ui/styled-system/*"]
     }
   }
 }

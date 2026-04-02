@@ -5,7 +5,8 @@
     "jsx": "react-jsx",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "paths": {
-      "@prenoms/ui/*": ["./src/*"]
+      "@prenoms/ui/*": ["./src/*"],
+      "styled-system/*": ["./styled-system/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],

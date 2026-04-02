@@ -7,6 +7,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@prenoms/ui/components/pagination";
+import { css } from "styled-system/css";
 
 type RankingPaginationProps = {
   page: number;
@@ -39,22 +40,15 @@ export function RankingPagination({ page, totalPages, onPageChange }: RankingPag
 
   const pages = getPageNumbers(page, totalPages);
 
-  function handleClick(p: number) {
-    return (e: React.MouseEvent) => {
-      e.preventDefault();
-      onPageChange(p);
-    };
-  }
-
   return (
     <Pagination>
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
             text="Précédent"
-            onClick={handleClick(page - 1)}
-            aria-disabled={page <= 1}
-            className={page <= 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+            onClick={() => onPageChange(page - 1)}
+            disabled={page <= 1}
+            className={css({ cursor: page <= 1 ? "default" : "pointer" })}
           />
         </PaginationItem>
         {pages.map((p, i) =>
@@ -66,8 +60,8 @@ export function RankingPagination({ page, totalPages, onPageChange }: RankingPag
             <PaginationItem key={p}>
               <PaginationLink
                 isActive={p === page}
-                onClick={handleClick(p)}
-                className="cursor-pointer"
+                onClick={() => onPageChange(p)}
+                className={css({ cursor: "pointer" })}
               >
                 {p}
               </PaginationLink>
@@ -77,9 +71,9 @@ export function RankingPagination({ page, totalPages, onPageChange }: RankingPag
         <PaginationItem>
           <PaginationNext
             text="Suivant"
-            onClick={handleClick(page + 1)}
-            aria-disabled={page >= totalPages}
-            className={page >= totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+            onClick={() => onPageChange(page + 1)}
+            disabled={page >= totalPages}
+            className={css({ cursor: page >= totalPages ? "default" : "pointer" })}
           />
         </PaginationItem>
       </PaginationContent>

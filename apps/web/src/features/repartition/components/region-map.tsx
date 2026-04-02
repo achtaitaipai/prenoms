@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { css } from "styled-system/css";
 
 import { REGION_PATHS, VIEWBOX } from "./region-paths";
 
@@ -32,8 +33,8 @@ export function RegionMap({ data }: Props) {
   const maxPercent = Math.max(...data.map((d) => d.percent), 0);
 
   return (
-    <div className="relative">
-      <svg viewBox={VIEWBOX} xmlns="http://www.w3.org/2000/svg" className="w-full">
+    <div className={css({ position: "relative" })}>
+      <svg viewBox={VIEWBOX} xmlns="http://www.w3.org/2000/svg" className={css({ width: "full", maxHeight: "70vh" })}>
         {Object.entries(REGION_PATHS).map(([code, { name, d }]) => {
           const regionData = dataMap.get(code);
           const percent = regionData?.percent ?? 0;
@@ -44,7 +45,12 @@ export function RegionMap({ data }: Props) {
               fill={getColor(percent, maxPercent)}
               stroke="currentColor"
               strokeWidth={0.5}
-              className="cursor-pointer opacity-80 transition-opacity hover:opacity-100"
+              className={css({
+                cursor: "pointer",
+                opacity: 0.8,
+                transition: "opacity",
+                _hover: { opacity: 1 },
+              })}
               onMouseMove={(e) => {
                 const rect = e.currentTarget.closest("svg")!.getBoundingClientRect();
                 setTooltip({
@@ -62,10 +68,22 @@ export function RegionMap({ data }: Props) {
       </svg>
       {tooltip && (
         <div
-          className="pointer-events-none absolute z-10 rounded border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md"
+          className={css({
+            pointerEvents: "none",
+            position: "absolute",
+            zIndex: 10,
+            rounded: "md",
+            borderWidth: "1px",
+            bg: "popover",
+            px: "3",
+            py: "1.5",
+            fontSize: "sm",
+            color: "popover.foreground",
+            shadow: "md",
+          })}
           style={{ left: tooltip.x, top: tooltip.y, transform: "translate(-50%, -100%)" }}
         >
-          <p className="font-medium">{tooltip.name}</p>
+          <p className={css({ fontWeight: "medium" })}>{tooltip.name}</p>
           <p>
             {tooltip.count.toLocaleString("fr-FR")} ({tooltip.percent}%)
           </p>

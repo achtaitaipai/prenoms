@@ -40,11 +40,11 @@ bun run dev
 
 ## API
 
-| Endpoint | Description |
-| --- | --- |
-| `GET /national/ranking` | Classement des prenoms (sex, yearStart, yearEnd, page, pageSize) |
-| `GET /national/stats` | Serie temporelle d'un prenom (firstname, sex) |
-| `GET /national/repartition` | Repartition regionale (firstname, sex, yearStart, yearEnd) |
+| Endpoint                    | Description                                                      |
+| --------------------------- | ---------------------------------------------------------------- |
+| `GET /national/ranking`     | Classement des prenoms (sex, yearStart, yearEnd, page, pageSize) |
+| `GET /national/stats`       | Serie temporelle d'un prenom (firstname, sex)                    |
+| `GET /national/repartition` | Repartition regionale (firstname, sex, yearStart, yearEnd)       |
 
 ## Structure
 

@@ -1,10 +1,13 @@
-import { cn } from "@prenoms/ui/lib/utils";
+import { css } from "styled-system/css";
 
 function Skeleton({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="skeleton"
-      className={cn("animate-pulse rounded-none bg-muted", className)}
+      className={`${css({
+        animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        bg: "muted",
+      })} ${className ?? ""}`}
       {...props}
     />
   );

@@ -2,6 +2,7 @@ import { Button } from "@prenoms/ui/components/button";
 import { Input } from "@prenoms/ui/components/input";
 import { Label } from "@prenoms/ui/components/label";
 import { type FormEvent, useState } from "react";
+import { css } from "styled-system/css";
 
 export type RepartitionFormValues = {
   firstname: string;
@@ -34,8 +35,11 @@ export function RepartitionForm({ defaultValues, onSubmit }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-wrap items-end gap-4">
-      <div className="grid gap-1.5">
+    <form
+      onSubmit={handleSubmit}
+      className={css({ display: "flex", flexWrap: "wrap", alignItems: "flex-end", gap: "4" })}
+    >
+      <div className={css({ display: "grid", gap: "1.5" })}>
         <Label htmlFor="firstname">Prénom</Label>
         <Input
           id="firstname"
@@ -44,9 +48,9 @@ export function RepartitionForm({ defaultValues, onSubmit }: Props) {
           placeholder="Jean"
         />
       </div>
-      <div className="grid gap-1.5">
+      <div className={css({ display: "grid", gap: "1.5" })}>
         <Label>Sexe</Label>
-        <div className="flex gap-1">
+        <div className={css({ display: "flex", gap: "1" })}>
           {(
             [
               { label: "Tous", value: undefined },
@@ -66,7 +70,7 @@ export function RepartitionForm({ defaultValues, onSubmit }: Props) {
           ))}
         </div>
       </div>
-      <div className="grid gap-1.5">
+      <div className={css({ display: "grid", gap: "1.5" })}>
         <Label htmlFor="yearStart">Début</Label>
         <Input
           id="yearStart"
@@ -74,10 +78,10 @@ export function RepartitionForm({ defaultValues, onSubmit }: Props) {
           value={yearStart}
           onChange={(e) => setYearStart(e.target.value)}
           placeholder="1900"
-          className="w-24"
+          className={css({ width: "6rem" })}
         />
       </div>
-      <div className="grid gap-1.5">
+      <div className={css({ display: "grid", gap: "1.5" })}>
         <Label htmlFor="yearEnd">Fin</Label>
         <Input
           id="yearEnd"
@@ -85,7 +89,7 @@ export function RepartitionForm({ defaultValues, onSubmit }: Props) {
           value={yearEnd}
           onChange={(e) => setYearEnd(e.target.value)}
           placeholder="2024"
-          className="w-24"
+          className={css({ width: "6rem" })}
         />
       </div>
       <Button type="submit">Rechercher</Button>

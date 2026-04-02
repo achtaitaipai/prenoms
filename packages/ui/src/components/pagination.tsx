@@ -1,6 +1,5 @@
 import * as React from "react";
-
-import { cn } from "@prenoms/ui/lib/utils";
+import { css } from "styled-system/css";
 import { Button } from "@prenoms/ui/components/button";
 import { ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon } from "lucide-react";
 
@@ -10,7 +9,7 @@ function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
       role="navigation"
       aria-label="pagination"
       data-slot="pagination"
-      className={cn("mx-auto flex w-full justify-center", className)}
+      className={`${css({ mx: "auto", display: "flex", width: "full", justifyContent: "center" })} ${className ?? ""}`}
       {...props}
     />
   );
@@ -20,7 +19,7 @@ function PaginationContent({ className, ...props }: React.ComponentProps<"ul">) 
   return (
     <ul
       data-slot="pagination-content"
-      className={cn("flex items-center gap-0.5", className)}
+      className={`${css({ display: "flex", alignItems: "center", gap: "0.5" })} ${className ?? ""}`}
       {...props}
     />
   );
@@ -32,24 +31,18 @@ function PaginationItem({ ...props }: React.ComponentProps<"li">) {
 
 type PaginationLinkProps = {
   isActive?: boolean;
-} & Pick<React.ComponentProps<typeof Button>, "size"> &
-  React.ComponentProps<"a">;
+} & React.ComponentProps<"button">;
 
-function PaginationLink({ className, isActive, size = "icon", ...props }: PaginationLinkProps) {
+function PaginationLink({ className, isActive, ...props }: PaginationLinkProps) {
   return (
     <Button
       variant={isActive ? "outline" : "ghost"}
-      size={size}
-      className={cn(className)}
-      nativeButton={false}
-      render={
-        <a
-          aria-current={isActive ? "page" : undefined}
-          data-slot="pagination-link"
-          data-active={isActive}
-          {...props}
-        />
-      }
+      size="icon"
+      aria-current={isActive ? "page" : undefined}
+      data-slot="pagination-link"
+      data-active={isActive}
+      className={className}
+      {...props}
     />
   );
 }
@@ -58,17 +51,18 @@ function PaginationPrevious({
   className,
   text = "Previous",
   ...props
-}: React.ComponentProps<typeof PaginationLink> & { text?: string }) {
+}: PaginationLinkProps & { text?: string }) {
   return (
-    <PaginationLink
+    <Button
       aria-label="Go to previous page"
+      variant="ghost"
       size="default"
-      className={cn("pl-1.5!", className)}
+      className={className}
       {...props}
     >
-      <ChevronLeftIcon data-icon="inline-start" />
-      <span className="hidden sm:block">{text}</span>
-    </PaginationLink>
+      <ChevronLeftIcon />
+      <span className={css({ display: { base: "none", sm: "block" } })}>{text}</span>
+    </Button>
   );
 }
 
@@ -76,17 +70,18 @@ function PaginationNext({
   className,
   text = "Next",
   ...props
-}: React.ComponentProps<typeof PaginationLink> & { text?: string }) {
+}: PaginationLinkProps & { text?: string }) {
   return (
-    <PaginationLink
+    <Button
       aria-label="Go to next page"
+      variant="ghost"
       size="default"
-      className={cn("pr-1.5!", className)}
+      className={className}
       {...props}
     >
-      <span className="hidden sm:block">{text}</span>
-      <ChevronRightIcon data-icon="inline-end" />
-    </PaginationLink>
+      <span className={css({ display: { base: "none", sm: "block" } })}>{text}</span>
+      <ChevronRightIcon />
+    </Button>
   );
 }
 
@@ -95,14 +90,11 @@ function PaginationEllipsis({ className, ...props }: React.ComponentProps<"span"
     <span
       aria-hidden
       data-slot="pagination-ellipsis"
-      className={cn(
-        "flex size-8 items-center justify-center [&_svg:not([class*='size-'])]:size-4",
-        className,
-      )}
+      className={`${css({ display: "flex", width: "8", height: "8", alignItems: "center", justifyContent: "center" })} ${className ?? ""}`}
       {...props}
     >
-      <MoreHorizontalIcon />
-      <span className="sr-only">More pages</span>
+      <MoreHorizontalIcon style={{ width: 16, height: 16 }} />
+      <span className={css({ srOnly: true })}>More pages</span>
     </span>
   );
 }
