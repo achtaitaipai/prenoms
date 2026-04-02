@@ -1,122 +1,76 @@
-import * as React from "react";
+import { Pagination as ArkPagination } from "@ark-ui/react/pagination";
 import { css, cx } from "styled-system/css";
-import { Button } from "@prenoms/ui/components/button";
-import { ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import type { ComponentProps } from "react";
 
-function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
+const triggerStyles = css({
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  cursor: "pointer",
+  height: "8",
+  minWidth: "8",
+  px: "2",
+  fontSize: "xs",
+  fontWeight: "medium",
+  transition: "colors",
+  _hover: { bg: "muted", color: "foreground" },
+  _disabled: { pointerEvents: "none", opacity: 0.5 },
+  "& svg": { width: "4", height: "4" },
+});
+
+const itemStyles = css({
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  cursor: "pointer",
+  height: "8",
+  minWidth: "8",
+  px: "2",
+  fontSize: "xs",
+  fontWeight: "medium",
+  transition: "colors",
+  _hover: { bg: "muted", color: "foreground" },
+  _selected: { borderWidth: "1px", borderColor: "border", bg: "background" },
+});
+
+const ellipsisStyles = css({
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  height: "8",
+  minWidth: "8",
+  fontSize: "xs",
+});
+
+function Pagination({ className, ...props }: ComponentProps<typeof ArkPagination.Root>) {
   return (
-    <nav
-      role="navigation"
-      aria-label="pagination"
-      data-slot="pagination"
-      className={cx(
-        css({ mx: "auto", display: "flex", width: "full", justifyContent: "center" }),
-        className,
-      )}
-      {...props}
-    />
+    <ArkPagination.Root className={cx(css({ mx: "auto" }), className)} {...props}>
+      <ArkPagination.Context>
+        {(pagination) => (
+          <div className={css({ display: "flex", alignItems: "center", gap: "0.5" })}>
+            <ArkPagination.PrevTrigger className={triggerStyles}>
+              <ChevronLeftIcon />
+            </ArkPagination.PrevTrigger>
+            {pagination.pages.map((page, index) =>
+              page.type === "page" ? (
+                <ArkPagination.Item key={index} {...page} className={itemStyles}>
+                  {page.value}
+                </ArkPagination.Item>
+              ) : (
+                <ArkPagination.Ellipsis key={index} index={index} className={ellipsisStyles}>
+                  &hellip;
+                </ArkPagination.Ellipsis>
+              ),
+            )}
+            <ArkPagination.NextTrigger className={triggerStyles}>
+              <ChevronRightIcon />
+            </ArkPagination.NextTrigger>
+          </div>
+        )}
+      </ArkPagination.Context>
+    </ArkPagination.Root>
   );
 }
 
-function PaginationContent({ className, ...props }: React.ComponentProps<"ul">) {
-  return (
-    <ul
-      data-slot="pagination-content"
-      className={cx(css({ display: "flex", alignItems: "center", gap: "0.5" }), className)}
-      {...props}
-    />
-  );
-}
-
-function PaginationItem({ ...props }: React.ComponentProps<"li">) {
-  return <li data-slot="pagination-item" {...props} />;
-}
-
-type PaginationLinkProps = {
-  isActive?: boolean;
-} & React.ComponentProps<"button">;
-
-function PaginationLink({ className, isActive, ...props }: PaginationLinkProps) {
-  return (
-    <Button
-      variant={isActive ? "outline" : "ghost"}
-      size="icon"
-      aria-current={isActive ? "page" : undefined}
-      data-slot="pagination-link"
-      data-active={isActive}
-      className={className}
-      {...props}
-    />
-  );
-}
-
-function PaginationPrevious({
-  className,
-  text = "Previous",
-  ...props
-}: PaginationLinkProps & { text?: string }) {
-  return (
-    <Button
-      aria-label="Go to previous page"
-      variant="ghost"
-      size="default"
-      className={className}
-      {...props}
-    >
-      <ChevronLeftIcon />
-      <span className={css({ display: { base: "none", sm: "block" } })}>{text}</span>
-    </Button>
-  );
-}
-
-function PaginationNext({
-  className,
-  text = "Next",
-  ...props
-}: PaginationLinkProps & { text?: string }) {
-  return (
-    <Button
-      aria-label="Go to next page"
-      variant="ghost"
-      size="default"
-      className={className}
-      {...props}
-    >
-      <span className={css({ display: { base: "none", sm: "block" } })}>{text}</span>
-      <ChevronRightIcon />
-    </Button>
-  );
-}
-
-function PaginationEllipsis({ className, ...props }: React.ComponentProps<"span">) {
-  return (
-    <span
-      aria-hidden
-      data-slot="pagination-ellipsis"
-      className={cx(
-        css({
-          display: "flex",
-          width: "8",
-          height: "8",
-          alignItems: "center",
-          justifyContent: "center",
-        }),
-        className,
-      )}
-      {...props}
-    >
-      <MoreHorizontalIcon style={{ width: 16, height: 16 }} />
-      <span className={css({ srOnly: true })}>More pages</span>
-    </span>
-  );
-}
-
-export {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-};
+export { Pagination };

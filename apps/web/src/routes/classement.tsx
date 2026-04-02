@@ -82,6 +82,7 @@ function RankingComponent() {
               <RankingPagination
                 page={data.page}
                 totalPages={data.totalPages}
+                pageSize={data.pageSize}
                 onPageChange={handlePageChange}
               />
             </div>
