@@ -1,5 +1,5 @@
 import * as React from "react";
-import { css } from "styled-system/css";
+import { css, cx } from "styled-system/css";
 import { Button } from "@prenoms/ui/components/button";
 import { ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon } from "lucide-react";
 
@@ -9,7 +9,10 @@ function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
       role="navigation"
       aria-label="pagination"
       data-slot="pagination"
-      className={`${css({ mx: "auto", display: "flex", width: "full", justifyContent: "center" })} ${className ?? ""}`}
+      className={cx(
+        css({ mx: "auto", display: "flex", width: "full", justifyContent: "center" }),
+        className,
+      )}
       {...props}
     />
   );
@@ -19,7 +22,7 @@ function PaginationContent({ className, ...props }: React.ComponentProps<"ul">) 
   return (
     <ul
       data-slot="pagination-content"
-      className={`${css({ display: "flex", alignItems: "center", gap: "0.5" })} ${className ?? ""}`}
+      className={cx(css({ display: "flex", alignItems: "center", gap: "0.5" }), className)}
       {...props}
     />
   );
@@ -90,7 +93,16 @@ function PaginationEllipsis({ className, ...props }: React.ComponentProps<"span"
     <span
       aria-hidden
       data-slot="pagination-ellipsis"
-      className={`${css({ display: "flex", width: "8", height: "8", alignItems: "center", justifyContent: "center" })} ${className ?? ""}`}
+      className={cx(
+        css({
+          display: "flex",
+          width: "8",
+          height: "8",
+          alignItems: "center",
+          justifyContent: "center",
+        }),
+        className,
+      )}
       {...props}
     >
       <MoreHorizontalIcon style={{ width: 16, height: 16 }} />

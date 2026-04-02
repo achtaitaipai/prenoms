@@ -1,4 +1,4 @@
-import { cva, type RecipeVariantProps } from "styled-system/css";
+import { cx, cva, type RecipeVariantProps } from "styled-system/css";
 
 const buttonStyles = cva({
   base: {
@@ -91,7 +91,7 @@ function Button({
   return (
     <button
       data-slot="button"
-      className={`${buttonStyles({ variant, size })} ${className ?? ""}`}
+      className={cx(buttonStyles({ variant, size }), className)}
       {...props}
     />
   );

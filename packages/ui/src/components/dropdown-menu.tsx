@@ -1,6 +1,6 @@
 import { Menu } from "@ark-ui/react/menu";
 import { Portal } from "@ark-ui/react/portal";
-import { css } from "styled-system/css";
+import { css, cx } from "styled-system/css";
 import { CheckIcon } from "lucide-react";
 import * as React from "react";
 
@@ -30,7 +30,7 @@ function DropdownMenuContent({ className, ...props }: React.ComponentProps<typeo
       <Menu.Positioner>
         <Menu.Content
           data-slot="dropdown-menu-content"
-          className={`${contentStyles} ${className ?? ""}`}
+          className={cx(contentStyles, className)}
           {...props}
         />
       </Menu.Positioner>
@@ -49,7 +49,10 @@ function DropdownMenuLabel({
   return (
     <Menu.ItemGroupLabel
       data-slot="dropdown-menu-label"
-      className={`${css({ px: "2", py: "2", fontSize: "xs", color: "muted.foreground" })} ${className ?? ""}`}
+      className={cx(
+        css({ px: "2", py: "2", fontSize: "xs", color: "muted.foreground" }),
+        className,
+      )}
       {...props}
     />
   );
@@ -84,11 +87,7 @@ const itemStyles = css({
 
 function DropdownMenuItem({ className, ...props }: React.ComponentProps<typeof Menu.Item>) {
   return (
-    <Menu.Item
-      data-slot="dropdown-menu-item"
-      className={`${itemStyles} ${className ?? ""}`}
-      {...props}
-    />
+    <Menu.Item data-slot="dropdown-menu-item" className={cx(itemStyles, className)} {...props} />
   );
 }
 
@@ -100,7 +99,7 @@ function DropdownMenuCheckboxItem({
   return (
     <Menu.CheckboxItem
       data-slot="dropdown-menu-checkbox-item"
-      className={`${itemStyles} ${css({ pr: "8", pl: "2" })} ${className ?? ""}`}
+      className={cx(itemStyles, css({ pr: "8", pl: "2" }), className)}
       {...props}
     >
       <span
@@ -134,7 +133,7 @@ function DropdownMenuRadioItem({
   return (
     <Menu.RadioItem
       data-slot="dropdown-menu-radio-item"
-      className={`${itemStyles} ${css({ pr: "8", pl: "2" })} ${className ?? ""}`}
+      className={cx(itemStyles, css({ pr: "8", pl: "2" }), className)}
       {...props}
     >
       <span
@@ -163,7 +162,7 @@ function DropdownMenuSeparator({
   return (
     <Menu.Separator
       data-slot="dropdown-menu-separator"
-      className={`${css({ mx: "-1", height: "1px", bg: "border" })} ${className ?? ""}`}
+      className={cx(css({ mx: "-1", height: "1px", bg: "border" }), className)}
       {...props}
     />
   );
@@ -173,7 +172,10 @@ function DropdownMenuShortcut({ className, ...props }: React.ComponentProps<"spa
   return (
     <span
       data-slot="dropdown-menu-shortcut"
-      className={`${css({ ml: "auto", fontSize: "xs", letterSpacing: "widest", color: "muted.foreground" })} ${className ?? ""}`}
+      className={cx(
+        css({ ml: "auto", fontSize: "xs", letterSpacing: "widest", color: "muted.foreground" }),
+        className,
+      )}
       {...props}
     />
   );

@@ -1,22 +1,25 @@
-import { css } from "styled-system/css";
+import { css, cx } from "styled-system/css";
 
 function Card({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card"
-      className={`${css({
-        display: "flex",
-        flexDirection: "column",
-        gap: "4",
-        overflow: "hidden",
-        bg: "card",
-        py: "4",
-        fontSize: "xs",
-        lineHeight: "relaxed",
-        color: "card.foreground",
-        ringWidth: "1px",
-        ringColor: "foreground/10",
-      })} ${className ?? ""}`}
+      className={cx(
+        css({
+          display: "flex",
+          flexDirection: "column",
+          gap: "4",
+          overflow: "hidden",
+          bg: "card",
+          py: "4",
+          fontSize: "xs",
+          lineHeight: "relaxed",
+          color: "card.foreground",
+          ringWidth: "1px",
+          ringColor: "foreground/10",
+        }),
+        className,
+      )}
       {...props}
     />
   );
@@ -26,13 +29,16 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card-header"
-      className={`${css({
-        display: "grid",
-        gridAutoRows: "min-content",
-        alignItems: "start",
-        gap: "1",
-        px: "4",
-      })} ${className ?? ""}`}
+      className={cx(
+        css({
+          display: "grid",
+          gridAutoRows: "min-content",
+          alignItems: "start",
+          gap: "1",
+          px: "4",
+        }),
+        className,
+      )}
       {...props}
     />
   );
@@ -42,7 +48,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card-title"
-      className={`${css({ fontSize: "sm", fontWeight: "medium" })} ${className ?? ""}`}
+      className={cx(css({ fontSize: "sm", fontWeight: "medium" }), className)}
       {...props}
     />
   );
@@ -52,7 +58,10 @@ function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card-description"
-      className={`${css({ fontSize: "xs", lineHeight: "relaxed", color: "muted.foreground" })} ${className ?? ""}`}
+      className={cx(
+        css({ fontSize: "xs", lineHeight: "relaxed", color: "muted.foreground" }),
+        className,
+      )}
       {...props}
     />
   );
@@ -62,23 +71,33 @@ function CardAction({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card-action"
-      className={`${css({ gridColumnStart: 2, gridRowStart: 1, gridRow: "span 2", alignSelf: "start", justifySelf: "end" })} ${className ?? ""}`}
+      className={cx(
+        css({
+          gridColumnStart: 2,
+          gridRowStart: 1,
+          gridRow: "span 2",
+          alignSelf: "start",
+          justifySelf: "end",
+        }),
+        className,
+      )}
       {...props}
     />
   );
 }
 
 function CardContent({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div data-slot="card-content" className={`${css({ px: "4" })} ${className ?? ""}`} {...props} />
-  );
+  return <div data-slot="card-content" className={cx(css({ px: "4" }), className)} {...props} />;
 }
 
 function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card-footer"
-      className={`${css({ display: "flex", alignItems: "center", borderTopWidth: "1px", p: "4" })} ${className ?? ""}`}
+      className={cx(
+        css({ display: "flex", alignItems: "center", borderTopWidth: "1px", p: "4" }),
+        className,
+      )}
       {...props}
     />
   );

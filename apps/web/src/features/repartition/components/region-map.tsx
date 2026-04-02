@@ -34,7 +34,11 @@ export function RegionMap({ data }: Props) {
 
   return (
     <div className={css({ position: "relative" })}>
-      <svg viewBox={VIEWBOX} xmlns="http://www.w3.org/2000/svg" className={css({ width: "full", maxHeight: "70vh" })}>
+      <svg
+        viewBox={VIEWBOX}
+        xmlns="http://www.w3.org/2000/svg"
+        className={css({ width: "full", maxHeight: "70vh" })}
+      >
         {Object.entries(REGION_PATHS).map(([code, { name, d }]) => {
           const regionData = dataMap.get(code);
           const percent = regionData?.percent ?? 0;
