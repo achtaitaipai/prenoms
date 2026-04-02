@@ -2,11 +2,13 @@ FROM oven/bun:debian
 WORKDIR /app
 COPY package.json bun.lock ./
 COPY apps/server/package.json ./apps/server/
+COPY apps/web/package.json ./apps/web/
 COPY packages/db/package.json ./packages/db/
 COPY packages/env/package.json ./packages/env/
 COPY packages/config/package.json ./packages/config/
 COPY packages/seed/package.json ./packages/seed/
-RUN bun install --frozen-lockfile --production
+COPY packages/ui/package.json ./packages/ui/
+RUN bun install --frozen-lockfile --production --ignore-scripts
 COPY . .
 COPY apps/server/entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
