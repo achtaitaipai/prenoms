@@ -3,6 +3,8 @@ services:
     image: ghcr.io/achtaitaipai/prenoms-web:latest
     container_name: prenoms-web
     restart: unless-stopped
+    ports:
+      - "8080:80"
     networks:
       - caddy_net
     depends_on:
@@ -12,6 +14,8 @@ services:
     image: ghcr.io/achtaitaipai/prenoms-server:latest
     container_name: prenoms-server
     restart: unless-stopped
+    ports:
+      - "3000:3000"
     volumes:
       - ./data:/app/data
     environment:
