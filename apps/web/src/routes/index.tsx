@@ -41,7 +41,7 @@ function HomeComponent() {
         })}
       >
         <Link
-          to="/statistiques"
+          to="/evolutions"
           className={css({
             rounded: "lg",
             borderWidth: "1px",
@@ -50,7 +50,7 @@ function HomeComponent() {
             _hover: { bg: "muted" },
           })}
         >
-          <h2 className={css({ fontWeight: "medium" })}>Statistiques</h2>
+          <h2 className={css({ fontWeight: "medium" })}>Évolutions</h2>
           <p className={css({ mt: "1", fontSize: "sm", color: "muted.foreground" })}>
             Evolution temporelle d'un ou plusieurs prenoms
           </p>

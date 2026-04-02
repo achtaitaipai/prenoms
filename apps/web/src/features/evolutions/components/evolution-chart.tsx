@@ -11,18 +11,18 @@ import {
   YAxis,
 } from "recharts";
 
-import type { fetchStats } from "../api/get-stats";
+import type { fetchEvolution } from "../api/get-evolution";
 import type { Entry } from "../types";
 import { entryLabel } from "../types";
 
 const COLORS = ["#2563eb", "#dc2626", "#16a34a", "#9333ea", "#ea580c"];
 
-type StatsChartProps = {
+type EvolutionChartProps = {
   entries: Entry[];
-  results: UseQueryResult<Awaited<ReturnType<typeof fetchStats>>>[];
+  results: UseQueryResult<Awaited<ReturnType<typeof fetchEvolution>>>[];
 };
 
-export function StatsChart({ entries, results }: StatsChartProps) {
+export function EvolutionChart({ entries, results }: EvolutionChartProps) {
   const chartData = useMemo(() => {
     const yearMap = new Map<number, Record<string, number>>();
 

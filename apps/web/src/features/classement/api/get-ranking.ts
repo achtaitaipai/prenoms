@@ -11,7 +11,7 @@ type RankingParams = {
 };
 
 async function fetchRanking(params: RankingParams) {
-  const { data, error } = await api.national.ranking.get({
+  const { data, error } = await api.ranking.get({
     query: params,
   });
   if (error) throw error;

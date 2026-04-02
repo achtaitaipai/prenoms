@@ -10,7 +10,7 @@ export type RepartitionParams = {
 };
 
 async function fetchRepartition(params: RepartitionParams) {
-  const { data, error } = await api.national.repartition.get({
+  const { data, error } = await api.repartition.get({
     query: params,
   });
   if (error) throw error;

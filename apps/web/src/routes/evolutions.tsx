@@ -3,23 +3,23 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { css } from "styled-system/css";
 import { container } from "styled-system/patterns";
 
-import { useStatsQueries } from "@/features/statistiques/api/get-stats";
-import { SearchForm } from "@/features/statistiques/components/search-form";
-import { StatsChart } from "@/features/statistiques/components/stats-chart";
+import { useEvolutionQueries } from "@/features/evolutions/api/get-evolution";
+import { SearchForm } from "@/features/evolutions/components/search-form";
+import { EvolutionChart } from "@/features/evolutions/components/evolution-chart";
 import {
   entryLabel,
   parseEntries,
   serializeEntries,
   type Entry,
-} from "@/features/statistiques/types";
+} from "@/features/evolutions/types";
 
-type NationalSearch = {
+type EvolutionsSearch = {
   e?: string;
 };
 
-export const Route = createFileRoute("/statistiques")({
-  component: NationalComponent,
-  validateSearch: (search: Record<string, unknown>): NationalSearch => ({
+export const Route = createFileRoute("/evolutions")({
+  component: EvolutionsComponent,
+  validateSearch: (search: Record<string, unknown>): EvolutionsSearch => ({
     e: typeof search.e === "string" ? search.e : undefined,
   }),
 });
@@ -33,11 +33,11 @@ const pageContainer = container({
   py: "6",
 });
 
-function NationalComponent() {
+function EvolutionsComponent() {
   const { e } = Route.useSearch();
   const navigate = useNavigate();
   const entries = parseEntries(e ?? "");
-  const results = useStatsQueries(entries);
+  const results = useEvolutionQueries(entries);
 
   const isLoading = results.some((r) => r.isLoading);
 
@@ -58,7 +58,7 @@ function NationalComponent() {
     <div className={pageContainer}>
       <Card>
         <CardHeader>
-          <CardTitle>Statistiques nationales</CardTitle>
+          <CardTitle>Évolutions</CardTitle>
         </CardHeader>
         <CardContent className={css({ display: "flex", flexDirection: "column", gap: "4" })}>
           <SearchForm onAdd={addEntry} />
@@ -71,7 +71,7 @@ function NationalComponent() {
 
       <Card>
         <CardContent className={css({ pt: "6" })}>
-          <StatsChart entries={entries} results={results} />
+          <EvolutionChart entries={entries} results={results} />
         </CardContent>
       </Card>
     </div>
