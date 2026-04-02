@@ -19,7 +19,7 @@ RUN cd apps/server && bun run build
 FROM oven/bun:1-alpine AS runtime
 WORKDIR /app
 COPY --from=deps /app .
-COPY --from=build /app/apps/server/dist ./dist
+COPY --from=build /app/apps/server/dist ./apps/server/dist
 COPY --from=build /app/packages/db/src/schema ./packages/db/src/schema
 COPY --from=build /app/packages/db/drizzle.config.ts ./packages/db/drizzle.config.ts
 COPY --from=build /app/packages/db/package.json ./packages/db/package.json
