@@ -1,3 +1,3 @@
 #!/bin/sh
 cd /app/packages/db && bunx drizzle-kit push
-cd /app && exec bun run dist/index.mjs
+cd /app/apps/server && exec bun run /app/dist/index.mjs
