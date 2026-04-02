@@ -3,7 +3,7 @@ import { and, countDistinct, desc, eq, gte, lte, sum } from "drizzle-orm";
 import { Elysia } from "elysia";
 import { z } from "zod";
 
-export const classement = new Elysia({ prefix: "/national" }).get(
+export const classement = new Elysia().get(
   "/ranking",
   async ({ query }) => {
     const { sex, yearStart, yearEnd, page = 1, pageSize = 20 } = query;

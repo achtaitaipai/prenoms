@@ -2,9 +2,19 @@ import { db, nationalFirstnames } from "@prenoms/db";
 import { and, asc, eq, sum } from "drizzle-orm";
 import { Elysia } from "elysia";
 import { z } from "zod";
+import { MAX_YEAR, MIN_YEAR } from "../../config";
 
-export const statistiques = new Elysia({ prefix: "/national" }).get(
-  "/stats",
+function fillMissingYears(rows: { year: number; count: number }[]) {
+  if (rows.length === 0) return [];
+  const map = new Map(rows.map((r) => [r.year, r.count]));
+  return Array.from({ length: MAX_YEAR - MIN_YEAR + 1 }, (_, i) => {
+    const year = MIN_YEAR + i;
+    return { year, count: map.get(year) ?? 0 };
+  });
+}
+
+export const statistiques = new Elysia().get(
+  "/evolution",
   async ({ query }) => {
     const { firstname, sex } = query;
     const uppercased = firstname.toUpperCase();
@@ -17,7 +27,7 @@ export const statistiques = new Elysia({ prefix: "/national" }).get(
     const where = and(...conditions);
 
     if (sex !== undefined) {
-      const rows = await db
+      const dbRows = await db
         .select({
           year: nationalFirstnames.year,
           count: nationalFirstnames.count,
@@ -26,12 +36,13 @@ export const statistiques = new Elysia({ prefix: "/national" }).get(
         .where(where)
         .orderBy(asc(nationalFirstnames.year));
 
+      const rows = fillMissingYears(dbRows);
       const totalCount = rows.reduce((s, r) => s + r.count, 0);
 
       return { firstname: uppercased, totalCount, byYear: rows };
     }
 
-    const rows = await db
+    const dbRows = await db
       .select({
         year: nationalFirstnames.year,
         count: sum(nationalFirstnames.count).mapWith(Number),
@@ -41,6 +52,7 @@ export const statistiques = new Elysia({ prefix: "/national" }).get(
       .groupBy(nationalFirstnames.year)
       .orderBy(asc(nationalFirstnames.year));
 
+    const rows = fillMissingYears(dbRows);
     const totalCount = rows.reduce((s, r) => s + r.count, 0);
 
     return { firstname: uppercased, totalCount, byYear: rows };

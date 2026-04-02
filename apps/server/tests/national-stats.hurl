@@ -1,5 +1,5 @@
 # Basic query
-GET http://localhost:3000/national/stats?firstname=Jean
+GET http://localhost:3000/evolution?firstname=Jean
 
 HTTP 200
 [Asserts]
@@ -13,7 +13,7 @@ jsonpath "$.byYear[0].count" isInteger
 
 
 # With sex filter
-GET http://localhost:3000/national/stats?firstname=Jean&sex=1
+GET http://localhost:3000/evolution?firstname=Jean&sex=1
 
 HTTP 200
 [Asserts]
@@ -26,6 +26,6 @@ jsonpath "$.byYear[0].count" isInteger
 
 
 # Missing firstname → validation error
-GET http://localhost:3000/national/stats
+GET http://localhost:3000/evolution
 
 HTTP 422

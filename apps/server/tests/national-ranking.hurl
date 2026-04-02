@@ -1,5 +1,5 @@
 # Default ranking
-GET http://localhost:3000/national/ranking
+GET http://localhost:3000/ranking
 
 HTTP 200
 [Asserts]
@@ -12,7 +12,7 @@ jsonpath "$.data[0].total" isInteger
 
 
 # With pagination
-GET http://localhost:3000/national/ranking?page=2&pageSize=5
+GET http://localhost:3000/ranking?page=2&pageSize=5
 
 HTTP 200
 [Asserts]
@@ -25,7 +25,7 @@ jsonpath "$.data[0].total" isInteger
 
 
 # With sex filter
-GET http://localhost:3000/national/ranking?sex=1
+GET http://localhost:3000/ranking?sex=1
 
 HTTP 200
 [Asserts]
@@ -38,7 +38,7 @@ jsonpath "$.data[0].total" isInteger
 
 
 # With year range
-GET http://localhost:3000/national/ranking?yearStart=2000&yearEnd=2010
+GET http://localhost:3000/ranking?yearStart=2000&yearEnd=2010
 
 HTTP 200
 [Asserts]
