@@ -1,9 +1,3 @@
-export type StatsResponse = {
-  firstname: string;
-  totalCount: number;
-  byYear: { year: number; count: number }[];
-};
-
 export type Entry = {
   id: string;
   firstname: string;

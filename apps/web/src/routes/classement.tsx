@@ -1,10 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@prenoms/ui/components/card";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
-import { useRankingQuery } from "@/features/ranking/api/get-ranking";
-import { RankingFilters } from "@/features/ranking/components/ranking-filters";
-import { RankingPagination } from "@/features/ranking/components/ranking-pagination";
-import { RankingTable } from "@/features/ranking/components/ranking-table";
+import { useRankingQuery } from "@/features/classement/api/get-ranking";
+import { RankingFilters } from "@/features/classement/components/ranking-filters";
+import { RankingPagination } from "@/features/classement/components/ranking-pagination";
+import { RankingTable } from "@/features/classement/components/ranking-table";
 
 type RankingSearch = {
   sex?: 1 | 2;

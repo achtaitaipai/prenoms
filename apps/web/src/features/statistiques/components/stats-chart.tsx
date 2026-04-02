@@ -11,14 +11,15 @@ import {
   YAxis,
 } from "recharts";
 
-import type { Entry, StatsResponse } from "../types";
+import type { fetchStats } from "../api/get-stats";
+import type { Entry } from "../types";
 import { entryLabel } from "../types";
 
 const COLORS = ["#2563eb", "#dc2626", "#16a34a", "#9333ea", "#ea580c"];
 
 type StatsChartProps = {
   entries: Entry[];
-  results: UseQueryResult<StatsResponse>[];
+  results: UseQueryResult<Awaited<ReturnType<typeof fetchStats>>>[];
 };
 
 export function StatsChart({ entries, results }: StatsChartProps) {

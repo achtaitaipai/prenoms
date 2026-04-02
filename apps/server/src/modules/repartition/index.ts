@@ -3,7 +3,7 @@ import { and, desc, eq, gte, lte, sum } from "drizzle-orm";
 import { Elysia } from "elysia";
 import { z } from "zod";
 
-export const repartition = new Elysia().get(
+export const repartition = new Elysia({ prefix: "/national" }).get(
   "/repartition",
   async ({ query }) => {
     const { firstname, sex, yearStart, yearEnd } = query;

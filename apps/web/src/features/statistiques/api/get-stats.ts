@@ -3,7 +3,7 @@ import { useQueries } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import type { Entry } from "../types";
 
-async function fetchStats(firstname: string, sex?: 1 | 2) {
+export async function fetchStats(firstname: string, sex?: 1 | 2) {
   const { data, error } = await api.national.stats.get({
     query: { firstname, sex },
   });

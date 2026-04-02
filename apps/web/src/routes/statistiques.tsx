@@ -1,10 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@prenoms/ui/components/card";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
-import { useStatsQueries } from "@/features/national/api/get-stats";
-import { SearchForm } from "@/features/national/components/search-form";
-import { StatsChart } from "@/features/national/components/stats-chart";
-import { entryLabel, parseEntries, serializeEntries, type Entry } from "@/features/national/types";
+import { useStatsQueries } from "@/features/statistiques/api/get-stats";
+import { SearchForm } from "@/features/statistiques/components/search-form";
+import { StatsChart } from "@/features/statistiques/components/stats-chart";
+import { entryLabel, parseEntries, serializeEntries, type Entry } from "@/features/statistiques/types";
 
 type NationalSearch = {
   e?: string;
