@@ -1,12 +1,8 @@
 import { db, nationalFirstnames } from "@prenoms/db";
+import { rankingQuerySchema, rankingSearchQuerySchema } from "@prenoms/validators";
 import { and, asc, desc, eq, gte, lte, sql, sum } from "drizzle-orm";
 import { Elysia } from "elysia";
 import { z } from "zod";
-
-const sexSchema = z.coerce
-  .number()
-  .pipe(z.union([z.literal(1), z.literal(2)]))
-  .optional();
 
 function buildConditions(params: { sex?: number; yearStart?: number; yearEnd?: number }) {
   const conditions = [];
@@ -51,13 +47,7 @@ export const classement = new Elysia()
       return { page, pageSize, totalPages, data };
     },
     {
-      query: z.object({
-        sex: sexSchema,
-        yearStart: z.coerce.number().optional(),
-        yearEnd: z.coerce.number().optional(),
-        page: z.coerce.number().min(1).default(1),
-        pageSize: z.coerce.number().min(1).max(100).default(20),
-      }),
+      query: rankingQuerySchema,
       response: z.object({
         page: z.number().int(),
         pageSize: z.number().int(),
@@ -111,12 +101,6 @@ export const classement = new Elysia()
       return { firstname: uppercased, total: nameRow.total, rank, page };
     },
     {
-      query: z.object({
-        firstname: z.string().min(1),
-        sex: sexSchema,
-        yearStart: z.coerce.number().optional(),
-        yearEnd: z.coerce.number().optional(),
-        pageSize: z.coerce.number().min(1).max(100).default(20),
-      }),
+      query: rankingSearchQuerySchema,
     },
   );

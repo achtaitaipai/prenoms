@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@prenoms/ui/components/card";
+import { repartitionSearchSchema } from "@prenoms/validators";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { css } from "styled-system/css";
 import { container } from "styled-system/patterns";
@@ -10,26 +11,9 @@ import {
 } from "@/features/repartition/components/repartition-form";
 import { RegionMap } from "@/features/repartition/components/region-map";
 
-type RepartitionSearch = {
-  firstname?: string;
-  sex?: 1 | 2;
-  yearStart?: number;
-  yearEnd?: number;
-};
-
 export const Route = createFileRoute("/repartition")({
   component: RepartitionComponent,
-  validateSearch: (search: Record<string, unknown>): RepartitionSearch => {
-    const sex = Number(search.sex);
-    const yearStart = Number(search.yearStart);
-    const yearEnd = Number(search.yearEnd);
-    return {
-      firstname: typeof search.firstname === "string" ? search.firstname : undefined,
-      sex: sex === 1 || sex === 2 ? sex : undefined,
-      yearStart: Number.isFinite(yearStart) ? yearStart : undefined,
-      yearEnd: Number.isFinite(yearEnd) ? yearEnd : undefined,
-    };
-  },
+  validateSearch: (search) => repartitionSearchSchema.parse(search),
 });
 
 const pageContainer = container({

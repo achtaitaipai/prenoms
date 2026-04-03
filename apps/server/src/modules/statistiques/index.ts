@@ -1,8 +1,9 @@
+import { MAX_YEAR, MIN_YEAR } from "@prenoms/config";
 import { db, nationalFirstnames } from "@prenoms/db";
+import { evolutionQuerySchema } from "@prenoms/validators";
 import { and, asc, eq, sum } from "drizzle-orm";
 import { Elysia } from "elysia";
 import { z } from "zod";
-import { MAX_YEAR, MIN_YEAR } from "@prenoms/config";
 
 function fillMissingYears(rows: { year: number; count: number }[]) {
   if (rows.length === 0) return [];
@@ -58,13 +59,7 @@ export const statistiques = new Elysia().get(
     return { firstname: uppercased, totalCount, byYear: rows };
   },
   {
-    query: z.object({
-      firstname: z.string().min(1),
-      sex: z.coerce
-        .number()
-        .pipe(z.union([z.literal(1), z.literal(2)]))
-        .optional(),
-    }),
+    query: evolutionQuerySchema,
     response: z.object({
       firstname: z.string(),
       totalCount: z.number().int(),

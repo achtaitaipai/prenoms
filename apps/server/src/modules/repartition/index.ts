@@ -1,4 +1,5 @@
 import { db, regionalFirstnames } from "@prenoms/db";
+import { repartitionQuerySchema } from "@prenoms/validators";
 import { and, desc, eq, gte, lte, sum } from "drizzle-orm";
 import { Elysia } from "elysia";
 import { z } from "zod";
@@ -43,15 +44,7 @@ export const repartition = new Elysia().get(
     return { firstname: uppercased, data };
   },
   {
-    query: z.object({
-      firstname: z.string().min(1),
-      sex: z.coerce
-        .number()
-        .pipe(z.union([z.literal(1), z.literal(2)]))
-        .optional(),
-      yearStart: z.coerce.number().optional(),
-      yearEnd: z.coerce.number().optional(),
-    }),
+    query: repartitionQuerySchema,
     response: z.object({
       firstname: z.string(),
       data: z.array(

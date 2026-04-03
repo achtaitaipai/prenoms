@@ -1,4 +1,5 @@
 import { db, nationalFirstnames, regionalFirstnames } from "@prenoms/db";
+import { autocompleteQuerySchema } from "@prenoms/validators";
 import { like } from "drizzle-orm";
 import { Elysia } from "elysia";
 import { z } from "zod";
@@ -20,10 +21,7 @@ export const autocomplete = new Elysia({ prefix: "/autocomplete" })
       return rows.map((r) => r.firstname);
     },
     {
-      query: z.object({
-        q: z.string().min(1),
-        limit: z.coerce.number().max(50).default(20),
-      }),
+      query: autocompleteQuerySchema,
       response: z.array(z.string()),
     },
   )
@@ -39,10 +37,7 @@ export const autocomplete = new Elysia({ prefix: "/autocomplete" })
       return rows.map((r) => r.firstname);
     },
     {
-      query: z.object({
-        q: z.string().min(1),
-        limit: z.coerce.number().max(50).default(20),
-      }),
+      query: autocompleteQuerySchema,
       response: z.array(z.string()),
     },
   );

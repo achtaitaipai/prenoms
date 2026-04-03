@@ -1,6 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@prenoms/ui/components/card";
+import { rankingSearchParamsSchema } from "@prenoms/validators";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import type { z } from "zod";
 import { css } from "styled-system/css";
 import { container } from "styled-system/patterns";
 
@@ -11,27 +13,11 @@ import { RankingPagination } from "@/features/classement/components/ranking-pagi
 import { RankingTable } from "@/features/classement/components/ranking-table";
 import { SearchInput } from "@/features/classement/components/search-input";
 
-type RankingSearch = {
-  sex?: 1 | 2;
-  yearStart?: number;
-  yearEnd?: number;
-  page?: number;
-};
+type RankingSearch = z.infer<typeof rankingSearchParamsSchema>;
 
 export const Route = createFileRoute("/classement")({
   component: RankingComponent,
-  validateSearch: (search: Record<string, unknown>): RankingSearch => {
-    const sex = Number(search.sex);
-    const yearStart = Number(search.yearStart);
-    const yearEnd = Number(search.yearEnd);
-    const page = Number(search.page);
-    return {
-      sex: sex === 1 || sex === 2 ? sex : undefined,
-      yearStart: Number.isFinite(yearStart) ? yearStart : undefined,
-      yearEnd: Number.isFinite(yearEnd) ? yearEnd : undefined,
-      page: Number.isInteger(page) && page >= 1 ? page : undefined,
-    };
-  },
+  validateSearch: (search) => rankingSearchParamsSchema.parse(search),
 });
 
 const pageContainer = container({
@@ -44,10 +30,10 @@ const pageContainer = container({
 });
 
 function RankingComponent() {
-  const { sex, yearStart, yearEnd, page: searchPage } = Route.useSearch();
+  const { sex, yearStart, yearEnd, page: searchPage, pageSize: searchPageSize } = Route.useSearch();
   const navigate = useNavigate();
   const page = searchPage ?? 1;
-  const pageSize = 20;
+  const pageSize = searchPageSize ?? 20;
 
   const [searchedFirstname, setSearchedFirstname] = useState<string | null>(null);
 

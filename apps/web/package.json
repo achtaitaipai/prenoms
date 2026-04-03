@@ -17,6 +17,7 @@
     "@prenoms/env": "workspace:*",
     "@prenoms/server": "workspace:*",
     "@prenoms/ui": "workspace:*",
+    "@prenoms/validators": "workspace:*",
     "@tanstack/react-query": "^5.96.1",
     "@tanstack/react-router": "^1.141.1",
     "dotenv": "catalog:",

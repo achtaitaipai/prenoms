@@ -24,6 +24,7 @@
         "@elysiajs/openapi": "^1.4.14",
         "@prenoms/db": "workspace:*",
         "@prenoms/env": "workspace:*",
+        "@prenoms/validators": "workspace:*",
         "dotenv": "catalog:",
         "drizzle-orm": "^0.45.1",
         "elysia": "^1.4.21",
@@ -46,6 +47,7 @@
         "@prenoms/env": "workspace:*",
         "@prenoms/server": "workspace:*",
         "@prenoms/ui": "workspace:*",
+        "@prenoms/validators": "workspace:*",
         "@tanstack/react-query": "^5.96.1",
         "@tanstack/react-router": "^1.141.1",
         "dotenv": "catalog:",
@@ -137,6 +139,13 @@
         "@types/react": "catalog:",
         "@types/react-dom": "catalog:",
         "typescript": "^5.9.3",
+      },
+    },
+    "packages/validators": {
+      "name": "@prenoms/validators",
+      "version": "0.0.0",
+      "dependencies": {
+        "zod": "catalog:",
       },
     },
   },
@@ -444,6 +453,8 @@
     "@prenoms/server": ["@prenoms/server@workspace:apps/server"],
 
     "@prenoms/ui": ["@prenoms/ui@workspace:packages/ui"],
+
+    "@prenoms/validators": ["@prenoms/validators@workspace:packages/validators"],
 
     "@quansync/fs": ["@quansync/fs@1.0.0", "", { "dependencies": { "quansync": "^1.0.0" } }, "sha512-4TJ3DFtlf1L5LDMaM6CanJ/0lckGNtJcMjQ1NAV6zDmA0tEHKZtxNKin8EgPaVX1YzljbxckyT2tJrpQKAtngQ=="],
 
