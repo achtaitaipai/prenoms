@@ -3,16 +3,18 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "seed": "bun --env-file=../../apps/server/.env run src/index.ts",
-    "seed:regional": "bun --env-file=../../apps/server/.env run src/seed-regional.ts"
+    "seed": "bun --env-file=../../.env run src/index.ts",
+    "seed:regional": "bun --env-file=../../.env run src/seed-regional.ts",
+    "seed:similar": "bun --env-file=../../.env run src/seed-similar.ts"
   },
   "dependencies": {
+    "@prenoms/config": "workspace:*",
     "@prenoms/db": "workspace:*",
+    "@prenoms/functions": "workspace:*",
     "drizzle-orm": "^0.45.1",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@prenoms/config": "workspace:*",
     "typescript": "^5"
   }
 }

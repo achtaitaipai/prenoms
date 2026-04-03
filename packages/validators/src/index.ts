@@ -77,3 +77,15 @@ export const autocompleteQuerySchema = z.object({
   q: z.string().min(1),
   limit: z.coerce.number().max(50).default(20),
 });
+
+export const similairesQuerySchema = z.object({
+  firstname: firstnameSchema,
+  sourceSex: sexSchema,
+  targetSex: sexSchema,
+});
+
+export const similairesSearchSchema = z.object({
+  firstname: z.string().optional(),
+  sourceSex: sexSchema,
+  targetSex: sexSchema,
+});

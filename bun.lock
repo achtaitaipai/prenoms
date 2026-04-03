@@ -84,7 +84,9 @@
       "name": "@prenoms/db",
       "dependencies": {
         "@libsql/client": "catalog:",
+        "@prenoms/config": "workspace:*",
         "@prenoms/env": "workspace:*",
+        "@prenoms/functions": "workspace:*",
         "dotenv": "catalog:",
         "drizzle-orm": "^0.45.1",
         "drizzle-zod": "^0.7.1",
@@ -92,7 +94,6 @@
         "zod": "catalog:",
       },
       "devDependencies": {
-        "@prenoms/config": "workspace:*",
         "drizzle-kit": "^0.31.8",
         "typescript": "^5",
       },
@@ -118,12 +119,13 @@
     "packages/seed": {
       "name": "@prenoms/seed",
       "dependencies": {
+        "@prenoms/config": "workspace:*",
         "@prenoms/db": "workspace:*",
+        "@prenoms/functions": "workspace:*",
         "drizzle-orm": "^0.45.1",
         "zod": "catalog:",
       },
       "devDependencies": {
-        "@prenoms/config": "workspace:*",
         "typescript": "^5",
       },
     },

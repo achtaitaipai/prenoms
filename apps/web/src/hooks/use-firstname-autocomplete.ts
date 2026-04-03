@@ -7,7 +7,10 @@ function toTitleCase(s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
 }
 
-export function useFirstnameAutocomplete(scope: "national" | "regional", inputValue: string) {
+export function useFirstnameAutocomplete(
+  scope: "national" | "regional" | "similar",
+  inputValue: string,
+) {
   const debouncedValue = useDebouncedValue(inputValue.trim(), 300);
   const { data, isFetching } = useAutocompleteQuery(scope, debouncedValue);
 

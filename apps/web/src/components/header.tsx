@@ -10,6 +10,7 @@ export default function Header() {
     { to: "/classement", label: "Classement" },
     { to: "/repartition", label: "Répartition" },
     { to: "/comparaison", label: "Comparaison" },
+    { to: "/similaires", label: "Similaires" },
   ] as const;
 
   return (

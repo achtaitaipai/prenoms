@@ -1,4 +1,4 @@
-import { db, nationalFirstnames, regionalFirstnames } from "@prenoms/db";
+import { db, nationalFirstnames, regionalFirstnames, similarFirstnames } from "@prenoms/db";
 import { autocompleteQuerySchema } from "@prenoms/validators";
 import { like } from "drizzle-orm";
 import { Elysia } from "elysia";
@@ -33,6 +33,22 @@ export const autocomplete = new Elysia({ prefix: "/autocomplete" })
         .selectDistinct({ firstname: regionalFirstnames.firstname })
         .from(regionalFirstnames)
         .where(like(regionalFirstnames.firstname, pattern))
+        .limit(query.limit);
+      return rows.map((r) => r.firstname);
+    },
+    {
+      query: autocompleteQuerySchema,
+      response: z.array(z.string()),
+    },
+  )
+  .get(
+    "/similar",
+    async ({ query }) => {
+      const pattern = `${sanitize(query.q.toUpperCase())}%`;
+      const rows = await db
+        .selectDistinct({ firstname: similarFirstnames.firstname })
+        .from(similarFirstnames)
+        .where(like(similarFirstnames.firstname, pattern))
         .limit(query.limit);
       return rows.map((r) => r.firstname);
     },

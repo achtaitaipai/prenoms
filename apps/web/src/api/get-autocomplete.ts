@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import { autocompleteKeys } from "./autocomplete.keys";
 
-async function fetchAutocomplete(scope: "national" | "regional", q: string) {
+async function fetchAutocomplete(scope: "national" | "regional" | "similar", q: string) {
   const { data, error } = await api.autocomplete[scope].get({
     query: { q, limit: 20 },
   });
@@ -11,7 +11,7 @@ async function fetchAutocomplete(scope: "national" | "regional", q: string) {
   return data;
 }
 
-export function useAutocompleteQuery(scope: "national" | "regional", q: string) {
+export function useAutocompleteQuery(scope: "national" | "regional" | "similar", q: string) {
   return useQuery({
     queryKey: autocompleteKeys.search(scope, q),
     queryFn: () => fetchAutocomplete(scope, q),
