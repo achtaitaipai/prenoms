@@ -59,6 +59,20 @@ export const birthsPerYearQuerySchema = z.object({
   sex: sexSchema,
 });
 
+export const similarityQuerySchema = z.object({
+  firstname1: firstnameSchema,
+  firstname2: firstnameSchema,
+  sex1: sexSchema,
+  sex2: sexSchema,
+});
+
+export const similaritySearchSchema = z.object({
+  firstname1: z.string().optional(),
+  firstname2: z.string().optional(),
+  sex1: sexSchema,
+  sex2: sexSchema,
+});
+
 export const autocompleteQuerySchema = z.object({
   q: z.string().min(1),
   limit: z.coerce.number().max(50).default(20),
