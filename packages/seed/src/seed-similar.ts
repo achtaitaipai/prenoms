@@ -116,10 +116,15 @@ async function seedVariant(
 
   const sourceSmoothed = smoothedMaps.get(sourceSex)!;
   const targetSmoothed = smoothedMaps.get(targetSex)!;
+  const sourceTotals = totalMaps.get(sourceSex)!;
   const targetTotals = totalMaps.get(targetSex)!;
 
-  const sourceNames = firstnames.filter((n) => sourceSmoothed.has(n));
-  const targetNames = firstnames.filter((n) => targetSmoothed.has(n));
+  const sourceNames = firstnames.filter(
+    (n) => sourceSmoothed.has(n) && (sourceTotals.get(n) ?? 0) >= SIMILAR_MIN_TOTAL,
+  );
+  const targetNames = firstnames.filter(
+    (n) => targetSmoothed.has(n) && (targetTotals.get(n) ?? 0) >= SIMILAR_MIN_TOTAL,
+  );
 
   console.log(`  ${sourceNames.length} source, ${targetNames.length} target names`);
 
