@@ -1,12 +1,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@prenoms/ui/components/card";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { css } from "styled-system/css";
 import { container } from "styled-system/patterns";
 
+import { useRankSearchQuery } from "@/features/classement/api/get-rank-search";
 import { useRankingQuery } from "@/features/classement/api/get-ranking";
 import { RankingFilters } from "@/features/classement/components/ranking-filters";
 import { RankingPagination } from "@/features/classement/components/ranking-pagination";
 import { RankingTable } from "@/features/classement/components/ranking-table";
+import { SearchInput } from "@/features/classement/components/search-input";
 
 type RankingSearch = {
   sex?: 1 | 2;
@@ -46,14 +49,43 @@ function RankingComponent() {
   const page = searchPage ?? 1;
   const pageSize = 20;
 
+  const [searchedFirstname, setSearchedFirstname] = useState<string | null>(null);
+
+  const rankSearch = useRankSearchQuery(
+    searchedFirstname ? { firstname: searchedFirstname, sex, yearStart, yearEnd, pageSize } : null,
+  );
+
   const { data, isLoading } = useRankingQuery({ sex, yearStart, yearEnd, page, pageSize });
 
   function handleFilter(filters: { sex?: 1 | 2; yearStart: number; yearEnd: number }) {
+    setSearchedFirstname(null);
     navigate({
       to: ".",
       search: { ...filters, page: undefined },
     });
   }
+
+  function handleSearch(value: string) {
+    setSearchedFirstname(value);
+  }
+
+  function handleClear() {
+    setSearchedFirstname(null);
+    navigate({
+      to: ".",
+      search: (prev: RankingSearch) => ({ ...prev, page: 1 }),
+    });
+  }
+
+  // Navigate to the page containing the searched firstname
+  useEffect(() => {
+    if (rankSearch.data?.page && rankSearch.data.page !== page) {
+      navigate({
+        to: ".",
+        search: (prev: RankingSearch) => ({ ...prev, page: rankSearch.data!.page }),
+      });
+    }
+  }, [rankSearch.data]);
 
   function handlePageChange(newPage: number) {
     navigate({
@@ -62,6 +94,8 @@ function RankingComponent() {
     });
   }
 
+  const highlightedFirstname = rankSearch.data?.firstname;
+
   return (
     <div className={pageContainer}>
       <Card>
@@ -69,7 +103,24 @@ function RankingComponent() {
           <CardTitle>Classement national</CardTitle>
         </CardHeader>
         <CardContent>
-          <RankingFilters onFilter={handleFilter} defaultValues={{ sex, yearStart, yearEnd }} />
+          <div className={css({ display: "flex", flexDirection: "column", gap: "4" })}>
+            <RankingFilters onFilter={handleFilter} defaultValues={{ sex, yearStart, yearEnd }} />
+            <SearchInput
+              onSearch={handleSearch}
+              onClear={handleClear}
+              isLoading={rankSearch.isFetching}
+              error={
+                searchedFirstname && !rankSearch.isFetching && rankSearch.data === null
+                  ? "Prénom non trouvé"
+                  : null
+              }
+              resultInfo={
+                rankSearch.data
+                  ? `${rankSearch.data.firstname} — #${rankSearch.data.rank} (${rankSearch.data.total.toLocaleString("fr-FR")} naissances)`
+                  : null
+              }
+            />
+          </div>
         </CardContent>
       </Card>
 
@@ -78,7 +129,13 @@ function RankingComponent() {
           {isLoading && <p className={css({ color: "muted.foreground" })}>Chargement...</p>}
           {data && (
             <div className={css({ display: "flex", flexDirection: "column", gap: "4" })}>
-              <RankingTable data={data.data} page={data.page} pageSize={data.pageSize} />
+              <RankingTable
+                data={data.data}
+                page={data.page}
+                pageSize={data.pageSize}
+                sex={sex}
+                highlightedFirstname={highlightedFirstname}
+              />
               <RankingPagination
                 page={data.page}
                 totalPages={data.totalPages}
