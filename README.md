@@ -25,9 +25,9 @@ Setup la base de donnees :
 
 ```bash
 bun run db:local         # demarrer la DB locale
-bun run db:push
-bun run db:seed
-bun run db:seed:regional
+bun run db:generate      # generer les migrations SQL
+bun run db:migrate       # appliquer les migrations
+bun run db:seed          # seed national + regional + similaires
 ```
 
 Lancer en dev :
@@ -41,14 +41,18 @@ bun run dev
 
 ## API
 
-| Endpoint                     | Description                                                                             |
-| ---------------------------- | --------------------------------------------------------------------------------------- |
-| `GET /ranking`               | Classement des prenoms (sex, yearStart, yearEnd, page, pageSize)                        |
-| `GET /ranking/search`        | Recherche d'un prenom dans le classement (firstname, sex, yearStart, yearEnd, pageSize) |
-| `GET /evolution`             | Serie temporelle d'un prenom (firstname, sex)                                           |
-| `GET /repartition`           | Repartition regionale (firstname, sex, yearStart, yearEnd)                              |
-| `GET /autocomplete/national` | Autocompletion prenoms nationaux (q, limit)                                             |
-| `GET /autocomplete/regional` | Autocompletion prenoms regionaux (q, limit)                                             |
+| Endpoint                    | Description                                                                             |
+| --------------------------- | --------------------------------------------------------------------------------------- |
+| `GET /ranking`              | Classement des prenoms (sex, yearStart, yearEnd, page, pageSize)                        |
+| `GET /ranking/search`       | Recherche d'un prenom dans le classement (firstname, sex, yearStart, yearEnd, pageSize) |
+| `GET /births-per-year`      | Naissances par annee (sex)                                                              |
+| `GET /evolution`            | Serie temporelle d'un prenom (firstname, sex)                                           |
+| `GET /repartition`          | Repartition regionale (firstname, sex, yearStart, yearEnd)                              |
+| `GET /comparison`           | Comparaison entre deux prenoms (firstname1, sex1, firstname2, sex2)                     |
+| `GET /similaires`           | Prenoms similaires (firstname, sourceSex, targetSex)                                    |
+| `GET /autocomplete/national`| Autocompletion prenoms nationaux (q, limit)                                             |
+| `GET /autocomplete/regional`| Autocompletion prenoms regionaux (q, limit)                                             |
+| `GET /autocomplete/similar` | Autocompletion prenoms similaires (q, limit)                                            |
 
 ## Structure
 
@@ -59,10 +63,11 @@ prenoms/
 │   └── server/         # API Elysia
 ├── packages/
 │   ├── db/             # Schema & migrations Drizzle
-│   ├── seed/           # Scripts de seed (national + regional)
+│   ├── seed/           # Scripts de seed (national + regional + similaires)
 │   ├── env/            # Validation des variables d'environnement
 │   ├── ui/             # Composants partages (PandaCSS + Ark UI)
 │   ├── validators/     # Schemas Zod partages (front + back)
+│   ├── functions/      # Fonctions utilitaires partagees
 │   └── config/         # Config partagee
 ```
 
@@ -74,9 +79,9 @@ prenoms/
 - `bun run check-types` : Typecheck all packages
 - `bun run test:server` : Tests integration API (Hurl)
 - `bun run db:local` : DB locale (Turso)
-- `bun run db:push` : Appliquer le schema
-- `bun run db:seed` : Seed national
-- `bun run db:seed:regional` : Seed regional
+- `bun run db:generate` : Generer les migrations SQL
+- `bun run db:migrate` : Appliquer les migrations
+- `bun run db:seed` : Seed complet (national + regional + similaires)
 - `bun run db:studio` : Drizzle Studio
 
 ## Deploiement
