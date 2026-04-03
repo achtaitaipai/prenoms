@@ -67,7 +67,12 @@ export function RepartitionForm({ defaultValues, onSubmit }: Props) {
           </Combobox.Control>
           <Combobox.Content>
             {collection.items.length > 0 ? (
-              <div className={css({ opacity: isLoading ? 0.5 : 1, transition: "opacity token(durations.fast)" })}>
+              <div
+                className={css({
+                  opacity: isLoading ? 0.5 : 1,
+                  transition: "opacity token(durations.fast)",
+                })}
+              >
                 {collection.items.map((item) => (
                   <Combobox.Item key={String(item)} item={item}>
                     <Combobox.ItemText>{String(item)}</Combobox.ItemText>

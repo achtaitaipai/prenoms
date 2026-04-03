@@ -2,7 +2,7 @@ import { db, nationalFirstnames } from "@prenoms/db";
 import { and, asc, eq, sum } from "drizzle-orm";
 import { Elysia } from "elysia";
 import { z } from "zod";
-import { MAX_YEAR, MIN_YEAR } from "../../config";
+import { MAX_YEAR, MIN_YEAR } from "@prenoms/config";
 
 function fillMissingYears(rows: { year: number; count: number }[]) {
   if (rows.length === 0) return [];
