@@ -50,7 +50,7 @@ export function EvolutionChart({ entries, results }: EvolutionChartProps) {
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="year" />
         <YAxis />
-        <Tooltip />
+        <Tooltip labelStyle={{ color: "var(--colors-popover-foreground)" }} contentStyle={{ backgroundColor: "var(--colors-popover)", borderColor: "var(--colors-border)" }} />
         <Legend />
         {labels.map((label, i) => (
           <Area
