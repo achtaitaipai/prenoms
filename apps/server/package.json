@@ -20,6 +20,7 @@
     "@elysiajs/openapi": "^1.4.14",
     "@prenoms/db": "workspace:*",
     "@prenoms/env": "workspace:*",
+    "@prenoms/functions": "workspace:*",
     "@prenoms/validators": "workspace:*",
     "dotenv": "catalog:",
     "drizzle-orm": "^0.45.1",

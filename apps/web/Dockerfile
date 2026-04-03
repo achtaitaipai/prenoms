@@ -7,7 +7,9 @@ COPY packages/env/package.json ./packages/env/
 COPY packages/ui/package.json ./packages/ui/
 COPY packages/config/package.json ./packages/config/
 COPY packages/db/package.json ./packages/db/
+COPY packages/functions/package.json ./packages/functions/
 COPY packages/seed/package.json ./packages/seed/
+COPY packages/validators/package.json ./packages/validators/
 RUN bun install --frozen-lockfile --ignore-scripts
 COPY . .
 ARG VITE_SERVER_URL

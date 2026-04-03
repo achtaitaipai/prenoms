@@ -24,6 +24,7 @@
         "@elysiajs/openapi": "^1.4.14",
         "@prenoms/db": "workspace:*",
         "@prenoms/env": "workspace:*",
+        "@prenoms/functions": "workspace:*",
         "@prenoms/validators": "workspace:*",
         "dotenv": "catalog:",
         "drizzle-orm": "^0.45.1",
@@ -109,6 +110,10 @@
         "@types/bun": "catalog:",
         "typescript": "^5",
       },
+    },
+    "packages/functions": {
+      "name": "@prenoms/functions",
+      "version": "0.0.0",
     },
     "packages/seed": {
       "name": "@prenoms/seed",
@@ -447,6 +452,8 @@
     "@prenoms/db": ["@prenoms/db@workspace:packages/db"],
 
     "@prenoms/env": ["@prenoms/env@workspace:packages/env"],
+
+    "@prenoms/functions": ["@prenoms/functions@workspace:packages/functions"],
 
     "@prenoms/seed": ["@prenoms/seed@workspace:packages/seed"],
 

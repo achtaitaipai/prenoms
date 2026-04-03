@@ -6,8 +6,10 @@ COPY apps/web/package.json ./apps/web/
 COPY packages/db/package.json ./packages/db/
 COPY packages/env/package.json ./packages/env/
 COPY packages/config/package.json ./packages/config/
+COPY packages/functions/package.json ./packages/functions/
 COPY packages/seed/package.json ./packages/seed/
 COPY packages/ui/package.json ./packages/ui/
+COPY packages/validators/package.json ./packages/validators/
 RUN bun install --frozen-lockfile --ignore-scripts
 COPY . .
 COPY apps/server/entrypoint.sh ./entrypoint.sh
