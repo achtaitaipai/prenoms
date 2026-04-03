@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { api } from "@/lib/api";
+import { repartitionKeys } from "./repartition.keys";
 
 export type RepartitionParams = {
   firstname: string;
@@ -19,7 +20,12 @@ async function fetchRepartition(params: RepartitionParams) {
 
 export function useRepartitionQuery(params: RepartitionParams | null) {
   return useQuery({
-    queryKey: ["repartition", params?.firstname, params?.sex, params?.yearStart, params?.yearEnd],
+    queryKey: repartitionKeys.detail({
+      firstname: params?.firstname,
+      sex: params?.sex,
+      yearStart: params?.yearStart,
+      yearEnd: params?.yearEnd,
+    }),
     queryFn: () => fetchRepartition(params!),
     enabled: !!params?.firstname,
   });

@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { api } from "@/lib/api";
+import { autocompleteKeys } from "./autocomplete.keys";
 
 async function fetchAutocomplete(scope: "national" | "regional", q: string) {
   const { data, error } = await api.autocomplete[scope].get({
@@ -12,7 +13,7 @@ async function fetchAutocomplete(scope: "national" | "regional", q: string) {
 
 export function useAutocompleteQuery(scope: "national" | "regional", q: string) {
   return useQuery({
-    queryKey: ["autocomplete", scope, q],
+    queryKey: autocompleteKeys.search(scope, q),
     queryFn: () => fetchAutocomplete(scope, q),
     enabled: q.length > 0,
   });

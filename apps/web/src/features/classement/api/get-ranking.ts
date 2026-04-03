@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { api } from "@/lib/api";
+import { rankingKeys } from "./ranking.keys";
 
 type RankingParams = {
   sex?: 1 | 2;
@@ -20,14 +21,7 @@ async function fetchRanking(params: RankingParams) {
 
 export function useRankingQuery(params: RankingParams) {
   return useQuery({
-    queryKey: [
-      "national-ranking",
-      params.sex,
-      params.yearStart,
-      params.yearEnd,
-      params.page,
-      params.pageSize,
-    ],
+    queryKey: rankingKeys.list(params),
     queryFn: () => fetchRanking(params),
   });
 }

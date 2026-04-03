@@ -2,6 +2,7 @@ import { useQueries } from "@tanstack/react-query";
 
 import { api } from "@/lib/api";
 import type { Entry } from "../types";
+import { evolutionKeys } from "./evolution.keys";
 
 export async function fetchEvolution(firstname: string, sex?: 1 | 2) {
   const { data, error } = await api.evolution.get({
@@ -14,7 +15,7 @@ export async function fetchEvolution(firstname: string, sex?: 1 | 2) {
 export function useEvolutionQueries(entries: Entry[]) {
   return useQueries({
     queries: entries.map((entry) => ({
-      queryKey: ["evolution", entry.firstname, entry.sex],
+      queryKey: evolutionKeys.detail(entry.firstname, entry.sex),
       queryFn: () => fetchEvolution(entry.firstname, entry.sex),
     })),
   });
