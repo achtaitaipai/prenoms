@@ -1,5 +1,5 @@
 import { db, nationalFirstnames, regionalFirstnames } from "@prenoms/db";
-import { like, sql } from "drizzle-orm";
+import { like } from "drizzle-orm";
 import { Elysia } from "elysia";
 import { z } from "zod";
 

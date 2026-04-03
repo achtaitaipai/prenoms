@@ -12,6 +12,7 @@ export default defineConfig({
       "styled-system": path.resolve(__dirname, "../../packages/ui/styled-system"),
     },
   },
+  envDir: path.resolve(__dirname, "../.."),
   server: {
     port: 3001,
   },
