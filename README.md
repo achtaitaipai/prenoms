@@ -4,7 +4,7 @@ Application web d'exploration des prenoms en France. Statistiques nationales, cl
 
 ## Stack
 
-- **Frontend** : React, TanStack Router, TailwindCSS, shadcn/ui
+- **Frontend** : React, TanStack Router, PandaCss, Ark Ui
 - **Backend** : Elysia (Bun)
 - **Base de donnees** : SQLite / Drizzle ORM
 - **Deploiement** : Docker, GitHub Actions, Caddy
