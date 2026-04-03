@@ -24,7 +24,7 @@ jsonpath "$.page" isInteger
 GET http://localhost:3000/ranking/search?firstname=Zzzzznotaname
 
 HTTP 200
-`null`
+``
 
 
 # Missing firstname
