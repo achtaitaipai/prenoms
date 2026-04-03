@@ -48,7 +48,7 @@ function RankingComponent() {
 
   const { data, isLoading } = useRankingQuery({ sex, yearStart, yearEnd, page, pageSize });
 
-  function handleFilter(filters: { sex?: 1 | 2; yearStart?: number; yearEnd?: number }) {
+  function handleFilter(filters: { sex?: 1 | 2; yearStart: number; yearEnd: number }) {
     navigate({
       to: ".",
       search: { ...filters, page: undefined },

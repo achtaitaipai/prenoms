@@ -1,6 +1,7 @@
 import { Button } from "@prenoms/ui/components/button";
 import { Input } from "@prenoms/ui/components/input";
 import { Label } from "@prenoms/ui/components/label";
+import { ToggleGroup } from "@prenoms/ui/components/toggle-group";
 import { type FormEvent, useState } from "react";
 import { css } from "styled-system/css";
 
@@ -38,25 +39,16 @@ export function SearchForm({ onAdd }: SearchFormProps) {
       </div>
       <div className={css({ display: "grid", gap: "1.5" })}>
         <Label>Sexe</Label>
-        <div className={css({ display: "flex", gap: "1" })}>
-          {(
-            [
-              { label: "Tous", value: undefined },
-              { label: "M", value: 1 },
-              { label: "F", value: 2 },
-            ] as const
-          ).map((opt) => (
-            <Button
-              key={opt.label}
-              type="button"
-              variant={sex === opt.value ? "default" : "outline"}
-              size="sm"
-              onClick={() => setSex(opt.value)}
-            >
-              {opt.label}
-            </Button>
-          ))}
-        </div>
+        <ToggleGroup.Root
+          value={[String(sex ?? "all")]}
+          onValueChange={(e) =>
+            setSex(e.value[0] === "all" ? undefined : (Number(e.value[0]) as 1 | 2))
+          }
+        >
+          <ToggleGroup.Item value="all">Tous</ToggleGroup.Item>
+          <ToggleGroup.Item value="1">M</ToggleGroup.Item>
+          <ToggleGroup.Item value="2">F</ToggleGroup.Item>
+        </ToggleGroup.Root>
       </div>
       <Button type="submit">Ajouter</Button>
     </form>
