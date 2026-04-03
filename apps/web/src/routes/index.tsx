@@ -85,6 +85,21 @@ function HomeComponent() {
             Distribution regionale d'un prenom
           </p>
         </Link>
+        <Link
+          to="/comparaison"
+          className={css({
+            rounded: "lg",
+            borderWidth: "1px",
+            p: "4",
+            transition: "colors",
+            _hover: { bg: "muted" },
+          })}
+        >
+          <h2 className={css({ fontWeight: "medium" })}>Comparaison</h2>
+          <p className={css({ mt: "1", fontSize: "sm", color: "muted.foreground" })}>
+            Comparer l'evolution de deux prenoms
+          </p>
+        </Link>
       </div>
     </div>
   );

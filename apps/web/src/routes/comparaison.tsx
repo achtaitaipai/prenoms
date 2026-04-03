@@ -1,15 +1,15 @@
-import { similaritySearchSchema } from "@prenoms/validators";
+import { comparaisonSearchSchema } from "@prenoms/validators";
 import { Card, CardContent, CardHeader, CardTitle } from "@prenoms/ui/components/card";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { css } from "styled-system/css";
 import { container } from "styled-system/patterns";
 
-import { useSimilarityQuery } from "@/features/similarite/api/get-similarity";
-import { SimilarityForm } from "@/features/similarite/components/similarity-form";
+import { useComparaisonQuery } from "@/features/comparaison/api/get-comparaison";
+import { ComparaisonForm } from "@/features/comparaison/components/comparaison-form";
 
-export const Route = createFileRoute("/similarite")({
-  component: SimilariteComponent,
-  validateSearch: (search: Record<string, unknown>) => similaritySearchSchema.parse(search),
+export const Route = createFileRoute("/comparaison")({
+  component: ComparaisonComponent,
+  validateSearch: (search: Record<string, unknown>) => comparaisonSearchSchema.parse(search),
 });
 
 const pageContainer = container({
@@ -21,11 +21,11 @@ const pageContainer = container({
   py: "6",
 });
 
-function SimilariteComponent() {
+function ComparaisonComponent() {
   const { firstname1 = "", firstname2 = "", sex1, sex2 } = Route.useSearch();
   const navigate = useNavigate();
 
-  const { data, isLoading } = useSimilarityQuery(firstname1, firstname2, sex1, sex2);
+  const { data, isLoading } = useComparaisonQuery(firstname1, firstname2, sex1, sex2);
 
   function handleCompare(f1: string, f2: string, s1?: 1 | 2, s2?: 1 | 2) {
     navigate({
@@ -43,10 +43,10 @@ function SimilariteComponent() {
     <div className={pageContainer}>
       <Card>
         <CardHeader>
-          <CardTitle>Similarité</CardTitle>
+          <CardTitle>Comparaison</CardTitle>
         </CardHeader>
         <CardContent>
-          <SimilarityForm defaultValues={{ firstname1, firstname2, sex1, sex2 }} onCompare={handleCompare} />
+          <ComparaisonForm defaultValues={{ firstname1, firstname2, sex1, sex2 }} onCompare={handleCompare} />
         </CardContent>
       </Card>
 
@@ -56,14 +56,14 @@ function SimilariteComponent() {
         <Card>
           <CardContent className={css({ pt: "6", textAlign: "center" })}>
             <p className={css({ fontSize: "sm", color: "muted.foreground" })}>
-              Similarité entre <strong>{data.firstname1}</strong> et{" "}
+              Comparaison entre <strong>{data.firstname1}</strong> et{" "}
               <strong>{data.firstname2}</strong>
             </p>
             <p className={css({ fontSize: "4xl", fontWeight: "bold", mt: "2" })}>
-              {formatSimilarity(data.correlation)}
+              {formatComparaison(data.correlation)}
             </p>
             <p className={css({ fontSize: "xs", color: "muted.foreground", mt: "1" })}>
-              {interpretSimilarity(data.correlation)}
+              {interpretComparaison(data.correlation)}
             </p>
           </CardContent>
         </Card>
@@ -72,12 +72,12 @@ function SimilariteComponent() {
   );
 }
 
-function formatSimilarity(r: number) {
+function formatComparaison(r: number) {
   const pct = Math.round(((r + 1) / 2) * 100);
   return `${pct} %`;
 }
 
-function interpretSimilarity(r: number) {
+function interpretComparaison(r: number) {
   const pct = ((r + 1) / 2) * 100;
   if (pct >= 90) return "Évolutions très similaires";
   if (pct >= 70) return "Évolutions similaires";

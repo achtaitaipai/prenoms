@@ -9,7 +9,7 @@ export default function Header() {
     { to: "/evolutions", label: "Évolutions" },
     { to: "/classement", label: "Classement" },
     { to: "/repartition", label: "Répartition" },
-    { to: "/similarite", label: "Similarité" },
+    { to: "/comparaison", label: "Comparaison" },
   ] as const;
 
   return (

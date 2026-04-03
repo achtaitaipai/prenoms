@@ -59,14 +59,14 @@ export const birthsPerYearQuerySchema = z.object({
   sex: sexSchema,
 });
 
-export const similarityQuerySchema = z.object({
+export const comparaisonQuerySchema = z.object({
   firstname1: firstnameSchema,
   firstname2: firstnameSchema,
   sex1: sexSchema,
   sex2: sexSchema,
 });
 
-export const similaritySearchSchema = z.object({
+export const comparaisonSearchSchema = z.object({
   firstname1: z.string().optional(),
   firstname2: z.string().optional(),
   sex1: sexSchema,

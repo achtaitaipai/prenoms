@@ -1,7 +1,7 @@
 import { MAX_YEAR, MIN_YEAR } from "@prenoms/config";
 import { db, nationalFirstnames } from "@prenoms/db";
 import { movingAverage, pearson } from "@prenoms/functions";
-import { similarityQuerySchema } from "@prenoms/validators";
+import { comparaisonQuerySchema } from "@prenoms/validators";
 import { and, asc, eq, sum } from "drizzle-orm";
 import { Elysia } from "elysia";
 import { z } from "zod";
@@ -51,8 +51,8 @@ async function getProportions(firstname: string, sex: number | undefined) {
   return proportions;
 }
 
-export const similarite = new Elysia().get(
-  "/similarity",
+export const comparaison = new Elysia().get(
+  "/comparison",
   async ({ query }) => {
     const { firstname1, firstname2, sex1, sex2 } = query;
 
@@ -72,7 +72,7 @@ export const similarite = new Elysia().get(
     };
   },
   {
-    query: similarityQuerySchema,
+    query: comparaisonQuerySchema,
     response: z.object({
       firstname1: z.string(),
       firstname2: z.string(),

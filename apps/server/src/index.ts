@@ -5,7 +5,7 @@ import { Elysia } from "elysia";
 import { autocomplete } from "./modules/autocomplete";
 import { classement } from "./modules/classement";
 import { repartition } from "./modules/repartition";
-import { similarite } from "./modules/similarite";
+import { comparaison } from "./modules/comparaison";
 import { statistiques } from "./modules/statistiques";
 
 const app = new Elysia()
@@ -21,7 +21,7 @@ const app = new Elysia()
   .use(classement)
   .use(repartition)
   .use(autocomplete)
-  .use(similarite)
+  .use(comparaison)
   .listen(3000, () => {
     console.log("Server is running on http://localhost:3000");
   });

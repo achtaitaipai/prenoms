@@ -7,19 +7,19 @@ import { css } from "styled-system/css";
 
 import { useFirstnameAutocomplete } from "@/hooks/use-firstname-autocomplete";
 
-type SimilarityFormValues = {
+type ComparaisonFormValues = {
   firstname1: string;
   firstname2: string;
   sex1: 1 | 2 | undefined;
   sex2: 1 | 2 | undefined;
 };
 
-type SimilarityFormProps = {
-  defaultValues?: Partial<SimilarityFormValues>;
+type ComparaisonFormProps = {
+  defaultValues?: Partial<ComparaisonFormValues>;
   onCompare: (firstname1: string, firstname2: string, sex1?: 1 | 2, sex2?: 1 | 2) => void;
 };
 
-export function SimilarityForm({ defaultValues, onCompare }: SimilarityFormProps) {
+export function ComparaisonForm({ defaultValues, onCompare }: ComparaisonFormProps) {
   const [firstname1, setFirstname1] = useState(defaultValues?.firstname1 ?? "");
   const [firstname2, setFirstname2] = useState(defaultValues?.firstname2 ?? "");
   const [sex1, setSex1] = useState<1 | 2 | undefined>(defaultValues?.sex1);
