@@ -23,7 +23,7 @@
   },
   "type": "module",
   "scripts": {
-    "dev": "bun run --filter '*' dev",
+    "dev": "bun run dev:server & bun run dev:web",
     "build": "bun run --filter '*' build",
     "check-types": "bun run --filter '*' check-types",
     "dev:web": "bun run --filter web dev",
