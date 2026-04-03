@@ -13,7 +13,8 @@ bun run check-types      # typecheck all packages
 bun run check            # oxlint + oxfmt
 bun run test:server      # hurl integration tests (apps/server/tests/*.hurl)
 bun run db:local         # start local Turso DB (local.db)
-bun run db:push          # apply Drizzle schema to DB
+bun run db:generate      # generate SQL migration files
+bun run db:migrate       # run migrations (runtime, via drizzle-orm)
 bun run db:studio        # Drizzle Studio UI
 bun run db:seed          # seed national data
 bun run db:seed:regional # seed regional data
@@ -43,4 +44,4 @@ Single `.env` at monorepo root. Contains DB URL, CORS origin, Vite server URL.
 
 ## Deployment
 
-Docker Compose: Nginx (web) + Elysia (server) + Caddy network. GitHub Actions builds images → pushes to GHCR → SSH deploys to VPS. Server entrypoint runs `drizzle-kit push` before starting.
+Docker Compose: Nginx (web) + Elysia (server) + Caddy network. GitHub Actions builds images → pushes to GHCR → SSH deploys to VPS. Server entrypoint runs drizzle-orm migrations before starting.

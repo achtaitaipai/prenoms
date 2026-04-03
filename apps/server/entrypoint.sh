@@ -1,3 +1,3 @@
 #!/bin/sh
-cd /app/packages/db && bunx drizzle-kit push
+cd /app && bun run packages/db/src/migrate.ts
 cd /app && exec bun run apps/server/src/index.ts
