@@ -46,7 +46,10 @@ function ComparaisonComponent() {
           <CardTitle>Comparaison</CardTitle>
         </CardHeader>
         <CardContent>
-          <ComparaisonForm defaultValues={{ firstname1, firstname2, sex1, sex2 }} onCompare={handleCompare} />
+          <ComparaisonForm
+            defaultValues={{ firstname1, firstname2, sex1, sex2 }}
+            onCompare={handleCompare}
+          />
         </CardContent>
       </Card>
 
