@@ -1,11 +1,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@prenoms/ui/components/card";
+import { Label } from "@prenoms/ui/components/label";
+import { ToggleGroup } from "@prenoms/ui/components/toggle-group";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useMemo, useState } from "react";
 import { css } from "styled-system/css";
 import { container } from "styled-system/patterns";
 
+import { useBirthsPerYearQueries } from "@/features/evolutions/api/get-births-per-year";
 import { useEvolutionQueries } from "@/features/evolutions/api/get-evolution";
-import { SearchForm } from "@/features/evolutions/components/search-form";
 import { EvolutionChart } from "@/features/evolutions/components/evolution-chart";
+import { SearchForm } from "@/features/evolutions/components/search-form";
 import {
   entryLabel,
   parseEntries,
@@ -38,6 +42,23 @@ function EvolutionsComponent() {
   const navigate = useNavigate();
   const entries = parseEntries(e ?? "");
   const results = useEvolutionQueries(entries);
+  const [mode, setMode] = useState<"count" | "proportion">("count");
+
+  const uniqueSexValues = useMemo(() => {
+    const set = new Set<1 | 2 | undefined>(entries.map((e) => e.sex));
+    return [...set];
+  }, [entries]);
+  const birthsQueries = useBirthsPerYearQueries(uniqueSexValues);
+  const birthsPerYearBySex = useMemo(() => {
+    const map = new Map<1 | 2 | undefined, Map<number, number>>();
+    uniqueSexValues.forEach((sex, i) => {
+      const data = birthsQueries[i]?.data;
+      if (data) {
+        map.set(sex, new Map(data.byYear.map((r) => [r.year, r.total])));
+      }
+    });
+    return map;
+  }, [uniqueSexValues, birthsQueries]);
 
   const isLoading = results.some((r) => r.isLoading);
 
@@ -70,8 +91,25 @@ function EvolutionsComponent() {
       {isLoading && <p className={css({ color: "muted.foreground" })}>Chargement...</p>}
 
       <Card>
-        <CardContent className={css({ pt: "6" })}>
-          <EvolutionChart entries={entries} results={results} />
+        <CardContent
+          className={css({ pt: "6", display: "flex", flexDirection: "column", gap: "4" })}
+        >
+          <div className={css({ display: "flex", alignItems: "center", gap: "2" })}>
+            <Label>Affichage</Label>
+            <ToggleGroup.Root
+              value={[mode]}
+              onValueChange={(e) => setMode(e.value[0] as "count" | "proportion")}
+            >
+              <ToggleGroup.Item value="count">Nombre</ToggleGroup.Item>
+              <ToggleGroup.Item value="proportion">Proportion</ToggleGroup.Item>
+            </ToggleGroup.Root>
+          </div>
+          <EvolutionChart
+            entries={entries}
+            results={results}
+            mode={mode}
+            birthsPerYearBySex={birthsPerYearBySex}
+          />
         </CardContent>
       </Card>
     </div>

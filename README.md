@@ -41,14 +41,14 @@ bun run dev
 
 ## API
 
-| Endpoint                     | Description                                                      |
-| ---------------------------- | ---------------------------------------------------------------- |
-| `GET /ranking`               | Classement des prenoms (sex, yearStart, yearEnd, page, pageSize) |
+| Endpoint                     | Description                                                                             |
+| ---------------------------- | --------------------------------------------------------------------------------------- |
+| `GET /ranking`               | Classement des prenoms (sex, yearStart, yearEnd, page, pageSize)                        |
 | `GET /ranking/search`        | Recherche d'un prenom dans le classement (firstname, sex, yearStart, yearEnd, pageSize) |
-| `GET /evolution`             | Serie temporelle d'un prenom (firstname, sex)                    |
-| `GET /repartition`           | Repartition regionale (firstname, sex, yearStart, yearEnd)       |
-| `GET /autocomplete/national` | Autocompletion prenoms nationaux (q, limit)                      |
-| `GET /autocomplete/regional` | Autocompletion prenoms regionaux (q, limit)                      |
+| `GET /evolution`             | Serie temporelle d'un prenom (firstname, sex)                                           |
+| `GET /repartition`           | Repartition regionale (firstname, sex, yearStart, yearEnd)                              |
+| `GET /autocomplete/national` | Autocompletion prenoms nationaux (q, limit)                                             |
+| `GET /autocomplete/regional` | Autocompletion prenoms regionaux (q, limit)                                             |
 
 ## Structure
 
