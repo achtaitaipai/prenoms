@@ -1,2 +1,1 @@
-export const MIN_YEAR = 1900;
-export const MAX_YEAR = 2024;
+export { MAX_YEAR, MIN_YEAR } from "@prenoms/config";
