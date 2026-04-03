@@ -8,7 +8,7 @@ COPY packages/env/package.json ./packages/env/
 COPY packages/config/package.json ./packages/config/
 COPY packages/seed/package.json ./packages/seed/
 COPY packages/ui/package.json ./packages/ui/
-RUN bun install --frozen-lockfile --production --ignore-scripts
+RUN bun install --frozen-lockfile --ignore-scripts
 COPY . .
 COPY apps/server/entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
