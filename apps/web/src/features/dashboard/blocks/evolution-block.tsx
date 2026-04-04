@@ -93,8 +93,8 @@ export function EvolutionBlock({
               value={[mode]}
               onValueChange={(e) => onModeChange(e.value[0] as "count" | "proportion")}
             >
-              <ToggleGroup.Item value="count">Nombre</ToggleGroup.Item>
               <ToggleGroup.Item value="proportion">Proportion</ToggleGroup.Item>
+              <ToggleGroup.Item value="count">Nombre</ToggleGroup.Item>
             </ToggleGroup.Root>
           </div>
         </div>

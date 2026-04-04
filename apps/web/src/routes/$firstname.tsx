@@ -73,7 +73,7 @@ function DashboardComponent() {
           <EvolutionBlock
             firstname={firstname}
             sex={search.sex}
-            mode={search.evo_mode ?? "count"}
+            mode={search.evo_mode ?? "proportion"}
             onModeChange={(mode) => updateSearch({ evo_mode: mode })}
             extraEntries={search.evo_entries}
             onEntriesChange={(e) => updateSearch({ evo_entries: e || undefined })}

@@ -31,7 +31,6 @@ export function SearchForm({ onAdd }: SearchFormProps) {
       className={css({ display: "flex", flexWrap: "wrap", alignItems: "flex-end", gap: "4" })}
     >
       <div className={css({ display: "grid", gap: "1.5" })}>
-        <Label>Prénom</Label>
         <Combobox.Root
           collection={collection}
           inputValue={firstname}
@@ -46,7 +45,7 @@ export function SearchForm({ onAdd }: SearchFormProps) {
           closeOnSelect
         >
           <Combobox.Control>
-            <Combobox.Input placeholder="Jean" />
+            <Combobox.Input placeholder="Ajouter un prénom…" />
           </Combobox.Control>
           <Combobox.Content>
             {collection.items.length > 0 ? (
