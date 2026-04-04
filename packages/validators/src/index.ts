@@ -89,3 +89,17 @@ export const similairesSearchSchema = z.object({
   sourceSex: sexSchema,
   targetSex: sexSchema,
 });
+
+export const dashboardSearchSchema = z.object({
+  sex: sexSchema,
+  evo_mode: z.enum(["count", "proportion"]).optional(),
+  evo_entries: z.string().optional(),
+  rep_yearStart: yearStartSchema,
+  rep_yearEnd: yearEndSchema,
+  sim_targetSex: sexSchema,
+  rank_yearStart: yearStartSchema,
+  rank_yearEnd: yearEndSchema,
+  rank_page: z.coerce.number().min(1).optional(),
+  cmp_firstname: z.string().optional(),
+  cmp_sex: sexSchema,
+});

@@ -7,7 +7,7 @@ import {
   TableRow,
 } from "@prenoms/ui/components/table";
 import { Link } from "@tanstack/react-router";
-import { Map, TrendingUp } from "lucide-react";
+import { TrendingUp } from "lucide-react";
 import { css } from "styled-system/css";
 
 type RankingTableProps = {
@@ -61,20 +61,13 @@ export function RankingTable({
             <TableCell>
               <div className={css({ display: "flex", gap: "2", justifyContent: "flex-end" })}>
                 <Link
-                  to="/evolutions"
-                  search={{ e: sex ? `${row.firstname}:${sex}` : row.firstname }}
+                  to="/$firstname"
+                  params={{ firstname: row.firstname }}
+                  search={(prev) => ({ ...prev, sex })}
                   className={iconLink}
-                  title="Évolution"
+                  title="Dashboard"
                 >
                   <TrendingUp size={16} />
-                </Link>
-                <Link
-                  to="/repartition"
-                  search={{ firstname: row.firstname, sex }}
-                  className={iconLink}
-                  title="Répartition"
-                >
-                  <Map size={16} />
                 </Link>
               </div>
             </TableCell>

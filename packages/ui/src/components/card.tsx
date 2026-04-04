@@ -15,8 +15,9 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
           fontSize: "xs",
           lineHeight: "relaxed",
           color: "card.foreground",
-          ringWidth: "1px",
-          ringColor: "foreground/10",
+          borderWidth: "1px",
+          borderColor: "border",
+          rounded: "lg",
         }),
         className,
       )}
