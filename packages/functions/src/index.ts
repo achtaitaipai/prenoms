@@ -10,6 +10,20 @@ export function movingAverage(data: number[], window = 2): number[] {
   });
 }
 
+export function notorietyScore(totalBirths: number, maxBirths: number): number {
+  const logMax = Math.log(maxBirths);
+  return logMax > 0 ? Math.log(totalBirths) / logMax : 0;
+}
+
+export function similarityScore(
+  pearsonCorr: number,
+  notoriety: number,
+  pearsonWeight: number,
+  notorietyWeight: number,
+): number {
+  return pearsonCorr * pearsonWeight + notoriety * notorietyWeight;
+}
+
 export function pearson(x: number[], y: number[]): number {
   const n = x.length;
   const meanX = x.reduce((s, v) => s + v, 0) / n;

@@ -41,18 +41,18 @@ bun run dev
 
 ## API
 
-| Endpoint                    | Description                                                                             |
-| --------------------------- | --------------------------------------------------------------------------------------- |
-| `GET /ranking`              | Classement des prenoms (sex, yearStart, yearEnd, page, pageSize)                        |
-| `GET /ranking/search`       | Recherche d'un prenom dans le classement (firstname, sex, yearStart, yearEnd, pageSize) |
-| `GET /births-per-year`      | Naissances par annee (sex)                                                              |
-| `GET /evolution`            | Serie temporelle d'un prenom (firstname, sex)                                           |
-| `GET /repartition`          | Repartition regionale (firstname, sex, yearStart, yearEnd)                              |
-| `GET /comparison`           | Comparaison entre deux prenoms (firstname1, sex1, firstname2, sex2)                     |
-| `GET /similaires`           | Prenoms similaires (firstname, sourceSex, targetSex)                                    |
-| `GET /autocomplete/national`| Autocompletion prenoms nationaux (q, limit)                                             |
-| `GET /autocomplete/regional`| Autocompletion prenoms regionaux (q, limit)                                             |
-| `GET /autocomplete/similar` | Autocompletion prenoms similaires (q, limit)                                            |
+| Endpoint                     | Description                                                                             |
+| ---------------------------- | --------------------------------------------------------------------------------------- |
+| `GET /ranking`               | Classement des prenoms (sex, yearStart, yearEnd, page, pageSize)                        |
+| `GET /ranking/search`        | Recherche d'un prenom dans le classement (firstname, sex, yearStart, yearEnd, pageSize) |
+| `GET /births-per-year`       | Naissances par annee (sex)                                                              |
+| `GET /evolution`             | Serie temporelle d'un prenom (firstname, sex)                                           |
+| `GET /repartition`           | Repartition regionale (firstname, sex, yearStart, yearEnd)                              |
+| `GET /comparison`            | Comparaison entre deux prenoms (firstname1, sex1, firstname2, sex2)                     |
+| `GET /similaires`            | Prenoms similaires (firstname, sourceSex, targetSex)                                    |
+| `GET /autocomplete/national` | Autocompletion prenoms nationaux (q, limit)                                             |
+| `GET /autocomplete/regional` | Autocompletion prenoms regionaux (q, limit)                                             |
+| `GET /autocomplete/similar`  | Autocompletion prenoms similaires (q, limit)                                            |
 
 ## Structure
 

@@ -1,5 +1,5 @@
 import { MAX_YEAR, MIN_YEAR } from "@prenoms/config";
-import { and, asc, eq, sum } from "drizzle-orm";
+import { and, asc, eq, max, sum } from "drizzle-orm";
 import { db } from "../index";
 import { nationalFirstnames } from "../schema";
 
@@ -17,6 +17,33 @@ export async function getTotalBirths(sex: number | undefined) {
     .groupBy(nationalFirstnames.year)
     .orderBy(asc(nationalFirstnames.year));
   return new Map(rows.map((r) => [r.year, r.total]));
+}
+
+export async function getMaxTotalBirths(sex: number | undefined) {
+  const condition = sex !== undefined ? eq(nationalFirstnames.sex, sex) : undefined;
+  const sub = db
+    .select({
+      total: sum(nationalFirstnames.count).mapWith(Number).as("total"),
+    })
+    .from(nationalFirstnames)
+    .where(condition)
+    .groupBy(nationalFirstnames.firstname)
+    .as("sub");
+
+  const [row] = await db.select({ maxTotal: max(sub.total).mapWith(Number) }).from(sub);
+  return row?.maxTotal ?? 0;
+}
+
+export async function getTotalBirthsForName(firstname: string, sex: number | undefined) {
+  const conditions = [eq(nationalFirstnames.firstname, firstname.toUpperCase())];
+  if (sex !== undefined) conditions.push(eq(nationalFirstnames.sex, sex));
+
+  const [row] = await db
+    .select({ total: sum(nationalFirstnames.count).mapWith(Number) })
+    .from(nationalFirstnames)
+    .where(and(...conditions));
+
+  return row?.total ?? 0;
 }
 
 export async function getProportions(firstname: string, sex: number | undefined) {

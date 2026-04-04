@@ -40,11 +40,7 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {
         "national_firstnames_firstname_year_sex_pk": {
-          "columns": [
-            "firstname",
-            "year",
-            "sex"
-          ],
+          "columns": ["firstname", "year", "sex"],
           "name": "national_firstnames_firstname_year_sex_pk"
         }
       },
@@ -94,12 +90,7 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {
         "regional_firstnames_firstname_year_sex_region_pk": {
-          "columns": [
-            "firstname",
-            "year",
-            "sex",
-            "region"
-          ],
+          "columns": ["firstname", "year", "sex", "region"],
           "name": "regional_firstnames_firstname_year_sex_region_pk"
         }
       },
@@ -156,12 +147,7 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {
         "similar_firstnames_firstname_source_sex_target_sex_rank_pk": {
-          "columns": [
-            "firstname",
-            "source_sex",
-            "target_sex",
-            "rank"
-          ],
+          "columns": ["firstname", "source_sex", "target_sex", "rank"],
           "name": "similar_firstnames_firstname_source_sex_target_sex_rank_pk"
         }
       },

@@ -1,6 +1,13 @@
-import { MIN_YEAR, MAX_YEAR, SIMILAR_MIN_TOTAL, SIMILAR_TOP_N } from "@prenoms/config";
+import {
+  MIN_YEAR,
+  MAX_YEAR,
+  SIMILAR_MIN_TOTAL,
+  SIMILAR_TOP_N,
+  SIMILARITY_PEARSON_WEIGHT,
+  SIMILARITY_NOTORIETY_WEIGHT,
+} from "@prenoms/config";
 import { db, nationalFirstnames, similarFirstnames, getTotalBirths } from "@prenoms/db";
-import { movingAverage, pearson } from "@prenoms/functions";
+import { movingAverage, pearson, notorietyScore, similarityScore } from "@prenoms/functions";
 import { sql, sum, eq } from "drizzle-orm";
 
 const BATCH_SIZE = 1000;
@@ -128,6 +135,17 @@ async function seedVariant(
 
   console.log(`  ${sourceNames.length} source, ${targetNames.length} target names`);
 
+  // Precompute notoriety scores for target names
+  let maxTotal = 0;
+  for (const n of targetNames) {
+    const t = targetTotals.get(n) ?? 0;
+    if (t > maxTotal) maxTotal = t;
+  }
+  const targetNotoriety = new Map<string, number>();
+  for (const n of targetNames) {
+    targetNotoriety.set(n, notorietyScore(targetTotals.get(n) ?? 0, maxTotal));
+  }
+
   const rows: {
     firstname: string;
     similarFirstname: string;
@@ -141,7 +159,7 @@ async function seedVariant(
   const symmetric = sourceSex === targetSex;
 
   if (symmetric) {
-    const topMap = new Map<string, { name: string; corr: number }[]>();
+    const topMap = new Map<string, { name: string; score: number }[]>();
     for (const name of sourceNames) {
       topMap.set(name, []);
     }
@@ -155,22 +173,38 @@ async function seedVariant(
         const smoothB = sourceSmoothed.get(nameB)!;
         const corr = pearson(smoothA, smoothB);
 
+        // Notoriety differs per direction in symmetric case
+        const scoreAB = similarityScore(
+          corr,
+          targetNotoriety.get(nameB) ?? 0,
+          SIMILARITY_PEARSON_WEIGHT,
+          SIMILARITY_NOTORIETY_WEIGHT,
+        );
+        const scoreBA = similarityScore(
+          corr,
+          targetNotoriety.get(nameA) ?? 0,
+          SIMILARITY_PEARSON_WEIGHT,
+          SIMILARITY_NOTORIETY_WEIGHT,
+        );
+
         const topA = topMap.get(nameA)!;
-        if (topA.length < SIMILAR_TOP_N || corr > topA[topA.length - 1]!.corr) {
-          topA.push({ name: nameB, corr });
+        if (topA.length < SIMILAR_TOP_N || scoreAB > topA[topA.length - 1]!.score) {
+          topA.push({ name: nameB, score: scoreAB });
           topA.sort(
             (a, b) =>
-              b.corr - a.corr || (targetTotals.get(b.name) ?? 0) - (targetTotals.get(a.name) ?? 0),
+              b.score - a.score ||
+              (targetTotals.get(b.name) ?? 0) - (targetTotals.get(a.name) ?? 0),
           );
           if (topA.length > SIMILAR_TOP_N) topA.length = SIMILAR_TOP_N;
         }
 
         const topB = topMap.get(nameB)!;
-        if (topB.length < SIMILAR_TOP_N || corr > topB[topB.length - 1]!.corr) {
-          topB.push({ name: nameA, corr });
+        if (topB.length < SIMILAR_TOP_N || scoreBA > topB[topB.length - 1]!.score) {
+          topB.push({ name: nameA, score: scoreBA });
           topB.sort(
             (a, b) =>
-              b.corr - a.corr || (targetTotals.get(b.name) ?? 0) - (targetTotals.get(a.name) ?? 0),
+              b.score - a.score ||
+              (targetTotals.get(b.name) ?? 0) - (targetTotals.get(a.name) ?? 0),
           );
           if (topB.length > SIMILAR_TOP_N) topB.length = SIMILAR_TOP_N;
         }
@@ -186,7 +220,7 @@ async function seedVariant(
         rows.push({
           firstname: name,
           similarFirstname: top[r]!.name,
-          correlation: Math.round(top[r]!.corr * 10000) / 10000,
+          correlation: Math.round(top[r]!.score * 10000) / 10000,
           sourceSex: sexToValue(sourceSex),
           targetSex: sexToValue(targetSex),
           rank: r + 1,
@@ -198,18 +232,25 @@ async function seedVariant(
     for (let i = 0; i < sourceNames.length; i++) {
       const nameA = sourceNames[i]!;
       const smoothA = sourceSmoothed.get(nameA)!;
-      const top: { name: string; corr: number }[] = [];
+      const top: { name: string; score: number }[] = [];
 
       for (const nameB of targetNames) {
         if (nameB === nameA) continue;
         const smoothB = targetSmoothed.get(nameB)!;
         const corr = pearson(smoothA, smoothB);
+        const score = similarityScore(
+          corr,
+          targetNotoriety.get(nameB) ?? 0,
+          SIMILARITY_PEARSON_WEIGHT,
+          SIMILARITY_NOTORIETY_WEIGHT,
+        );
 
-        if (top.length < SIMILAR_TOP_N || corr > top[top.length - 1]!.corr) {
-          top.push({ name: nameB, corr });
+        if (top.length < SIMILAR_TOP_N || score > top[top.length - 1]!.score) {
+          top.push({ name: nameB, score });
           top.sort(
             (a, b) =>
-              b.corr - a.corr || (targetTotals.get(b.name) ?? 0) - (targetTotals.get(a.name) ?? 0),
+              b.score - a.score ||
+              (targetTotals.get(b.name) ?? 0) - (targetTotals.get(a.name) ?? 0),
           );
           if (top.length > SIMILAR_TOP_N) top.length = SIMILAR_TOP_N;
         }
@@ -219,7 +260,7 @@ async function seedVariant(
         rows.push({
           firstname: nameA,
           similarFirstname: top[r]!.name,
-          correlation: Math.round(top[r]!.corr * 10000) / 10000,
+          correlation: Math.round(top[r]!.score * 10000) / 10000,
           sourceSex: sexToValue(sourceSex),
           targetSex: sexToValue(targetSex),
           rank: r + 1,

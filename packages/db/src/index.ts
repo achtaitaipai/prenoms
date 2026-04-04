@@ -25,4 +25,10 @@ export function createDb() {
 export const db = createDb();
 
 export * from "./schema";
-export { getTotalBirths, getProportions, getProportionsWithBirthMap } from "./queries/proportions";
+export {
+  getTotalBirths,
+  getMaxTotalBirths,
+  getTotalBirthsForName,
+  getProportions,
+  getProportionsWithBirthMap,
+} from "./queries/proportions";
