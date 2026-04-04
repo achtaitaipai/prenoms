@@ -152,6 +152,7 @@
       "name": "@prenoms/validators",
       "version": "0.0.0",
       "dependencies": {
+        "@prenoms/config": "workspace:*",
         "zod": "catalog:",
       },
     },

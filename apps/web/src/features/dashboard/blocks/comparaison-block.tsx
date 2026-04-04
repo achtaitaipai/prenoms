@@ -4,6 +4,8 @@ import { PencilIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { css } from "styled-system/css";
 
+import { pickDefault } from "@prenoms/validators";
+
 import { useComparaisonQuery } from "@/features/comparaison/api/get-comparaison";
 import { useFirstnameAutocomplete } from "@/hooks/use-firstname-autocomplete";
 import { SEX_LABELS, formatSimilarity, toTitleCase } from "@/lib/format";
@@ -15,34 +17,6 @@ type Props = {
   cmpSex?: 1 | 2;
   onSettingsChange: (settings: { cmp_firstname?: string; cmp_sex?: 1 | 2 }) => void;
 };
-
-const DEFAULT_NAMES = [
-  "Marie",
-  "Pierre",
-  "Louis",
-  "Jeanne",
-  "Paul",
-  "Anne",
-  "Michel",
-  "Catherine",
-  "Jacques",
-  "Sophie",
-  "Philippe",
-  "Isabelle",
-  "Nicolas",
-  "Claire",
-  "Thomas",
-  "Julie",
-  "Lucas",
-  "Emma",
-  "Hugo",
-  "Léa",
-];
-
-function pickDefault(exclude: string) {
-  const candidates = DEFAULT_NAMES.filter((n) => n.toUpperCase() !== exclude.toUpperCase());
-  return candidates[Math.floor(Math.random() * candidates.length)]!;
-}
 
 export function ComparaisonBlock({
   firstname,

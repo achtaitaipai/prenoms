@@ -7,6 +7,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
+    "@prenoms/config": "workspace:*",
     "zod": "catalog:"
   }
 }

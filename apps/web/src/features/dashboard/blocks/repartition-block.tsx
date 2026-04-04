@@ -10,17 +10,17 @@ import { RegionMap } from "@/features/repartition/components/region-map";
 type Props = {
   firstname: string;
   sex?: 1 | 2;
-  yearStart?: number;
-  yearEnd?: number;
+  yearStart: number;
+  yearEnd: number;
   onSettingsChange: (settings: { rep_yearStart?: number; rep_yearEnd?: number }) => void;
 };
 
 export function RepartitionBlock({ firstname, sex, yearStart, yearEnd, onSettingsChange }: Props) {
-  const [years, setYears] = useState([yearStart ?? MIN_YEAR, yearEnd ?? MAX_YEAR]);
+  const [years, setYears] = useState([yearStart, yearEnd]);
 
   // Sync local slider state when props change (e.g. navigation)
   useEffect(() => {
-    setYears([yearStart ?? MIN_YEAR, yearEnd ?? MAX_YEAR]);
+    setYears([yearStart, yearEnd]);
   }, [yearStart, yearEnd]);
 
   const { data } = useRepartitionQuery({ firstname, sex, yearStart: years[0], yearEnd: years[1] });

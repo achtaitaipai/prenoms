@@ -1,5 +1,5 @@
 import { ToggleGroup } from "@prenoms/ui/components/toggle-group";
-import { dashboardSearchSchema } from "@prenoms/validators";
+import { dashboardSearchSchema, resolveDashboardSearch } from "@prenoms/validators";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useCallback } from "react";
 import { css } from "styled-system/css";
@@ -28,7 +28,7 @@ const pageContainer = container({
 
 function DashboardComponent() {
   const { firstname } = Route.useParams();
-  const search = Route.useSearch();
+  const search = resolveDashboardSearch(Route.useSearch());
   const navigate = useNavigate();
 
   const updateSearch = useCallback(
@@ -98,7 +98,6 @@ function DashboardComponent() {
               sex={search.sex}
               yearStart={search.rank_yearStart}
               yearEnd={search.rank_yearEnd}
-              page={search.rank_page}
               onSettingsChange={(s) => updateSearch(s)}
             />
           </div>
